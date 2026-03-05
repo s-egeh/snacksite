@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eat With Etor - Order Now</title>
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Paystack -->
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #FFF8DC;
+      color: #333;
+      padding-bottom: 100px;
+    }
+
+    /* Header */
+    .header {
+      background: #000;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    .header img {
+      height: 50px;
+      margin-bottom: 0.5rem;
+    }
+
+    .header h1 {
+      font-size: 1.5rem;
+      color: #FF8C00;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    /* Category Section */
+    .category-section {
+      margin: 3rem 0;
+    }
+
+    .category-header {
+      background: linear-gradient(135deg, #FF8C00, #FF6B35);
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3);
+    }
+
+    .category-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .category-icon {
+      font-size: 2rem;
+    }
+
+    /* Menu Grid */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    /* Menu Item Card */
+    .menu-item {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+      position: relative;
+    }
+
+    .menu-item:hover {
+      transform: translateY(-5px);
+    }
+
+    .menu-item.out-of-stock {
+      opacity: 0.6;
+    }
+
+    .menu-item img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .out-of-stock-banner {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      background: rgba(255, 0, 0, 0.9);
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      font-weight: bold;
+      font-size: 1.2rem;
+      transform: translateY(-50%) rotate(-5deg);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      z-index: 10;
+    }
+
+    .menu-item-content {
+      padding: 1.5rem;
+    }
+
+    .menu-item-name {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .menu-item-desc {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      min-height: 40px;
+    }
+
+    .menu-item-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .menu-item-price {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #FF8C00;
+    }
+
+    /* Quantity Controls */
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #F5E6D3;
+      border-radius: 25px;
+      padding: 0.25rem;
+    }
+
+    .quantity-btn {
+      width: 35px;
+      height: 35px;
+      border: none;
+      background: #FF8C00;
+      color: white;
+      border-radius: 50%;
+      font-size: 1.25rem;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .quantity-btn:hover {
+      background: #FF6B35;
+      transform: scale(1.1);
+    }
+
+    .quantity-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    .quantity-display {
+      min-width: 35px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    /* Cart Button (Sticky Bottom) */
+    .cart-sticky {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #000;
+      padding: 1rem;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
+      z-index: 200;
+    }
+
+    .cart-button {
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(135deg, #FF8C00, #FF6B35);
+      border: none;
+      padding: 1rem 1.5rem;
+      border-radius: 50px;
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(255, 140, 0, 0.4);
+      transition: all 0.3s;
+    }
+
+    .cart-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(255, 140, 0, 0.5);
+    }
+
+    .cart-button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .cart-count {
+      background: white;
+      color: #FF8C00;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.9);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 20px;
+      max-width: 500px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .modal-header {
+      background: #000;
+      color: white;
+      padding: 1.5rem;
+      border-radius: 20px 20px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+    }
+
+    /* Cart Items */
+    .cart-item {
+      display: flex;
+      gap: 1rem;
+      padding: 1rem;
+      border-bottom: 1px solid #eee;
+    }
+
+    .cart-item img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .cart-item-details {
+      flex: 1;
+    }
+
+    .cart-item-name {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .cart-item-price {
+      color: #FF8C00;
+      font-weight: 700;
+    }
+
+    .cart-summary {
+      background: #FFF8DC;
+      padding: 1rem;
+      border-radius: 12px;
+      margin-top: 1rem;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+
+    .summary-row.total {
+      border-top: 2px solid #333;
+      padding-top: 0.5rem;
+      margin-top: 0.5rem;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #FF8C00;
+    }
+
+    /* Form */
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: inherit;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: #FF8C00;
+    }
+
+    .btn-primary {
+      width: 100%;
+      background: linear-gradient(135deg, #FF8C00, #FF6B35);
+      border: none;
+      padding: 1rem;
+      border-radius: 12px;
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.9;
+    }
+
+    .btn-primary:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    /* Payment Methods */
+    .payment-methods {
+      display: grid;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .payment-option {
+      border: 2px solid #ddd;
+      padding: 1rem;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .payment-option:hover {
+      border-color: #FF8C00;
+      background: rgba(255, 140, 0, 0.05);
+    }
+
+    .payment-option.selected {
+      border-color: #FF8C00;
+      background: rgba(255, 140, 0, 0.1);
+      box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.2);
+    }
+
+    .payment-icon {
+      font-size: 2rem;
+    }
+
+    .payment-info h4 {
+      margin: 0;
+    }
+
+    .payment-info p {
+      margin: 0;
+      font-size: 0.85rem;
+      color: #666;
+    }
+
+    /* Loading Overlay */
+    .loading-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.95);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .loading-overlay.active {
+      display: flex;
+    }
+
+    .loading-content {
+      background: white;
+      padding: 3rem;
+      border-radius: 20px;
+      text-align: center;
+      max-width: 400px;
+    }
+
+    .spinner {
+      border: 4px solid rgba(255, 140, 0, 0.2);
+      border-top-color: #FF8C00;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .success-icon {
+      font-size: 5rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+    }
+
+    .empty-state-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .menu-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cart-button {
+        font-size: 1rem;
+        padding: 0.875rem 1.25rem;
+      }
+
+      .category-title {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <img src="images/logo.jpeg" alt="Eat With Etor">
+    <h1>Cool Sips, Hot Snacks 🔥</h1>
+  </div>
+
+  <!-- Main Container -->
+  <div class="container" id="menuContainer">
+    <!-- Categories will be injected here -->
+  </div>
+
+  <!-- Sticky Cart Button -->
+  <div class="cart-sticky">
+    <button class="cart-button" id="cartButton" onclick="openCheckout()" disabled>
+      <span>View Cart (<span id="cartCount">0</span> items)</span>
+      <span>GHS <span id="cartTotal">0.00</span></span>
+    </button>
+  </div>
+
+  <!-- Checkout Modal -->
+  <div class="modal" id="checkoutModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Checkout</h2>
+        <button class="modal-close" onclick="closeCheckout()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <!-- Cart Items -->
+        <div id="cartItems"></div>
+
+        <!-- Cart Summary -->
+        <div class="cart-summary">
+          <div class="summary-row">
+            <span>Subtotal:</span>
+            <span>GHS <span id="subtotalAmount">0.00</span></span>
+          </div>
+          <div class="summary-row total">
+            <span>Total:</span>
+            <span>GHS <span id="totalAmount">0.00</span></span>
+          </div>
+        </div>
+
+        <!-- Customer Details Form -->
+        <form id="checkoutForm" onsubmit="handleCheckout(event)">
+          <div class="form-group">
+            <label class="form-label">Name *</label>
+            <input type="text" class="form-input" id="customerName" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Phone Number (MoMo) *</label>
+            <input type="tel" class="form-input" id="customerPhone" placeholder="0501234567" pattern="[0-9]{10}" required>
+            <small style="color: #666;">Enter 10-digit phone number (e.g., 0501234567)</small>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Email (Optional)</label>
+            <input type="email" class="form-input" id="customerEmail" placeholder="your@email.com">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Payment Method *</label>
+            <div class="payment-methods">
+              <div class="payment-option selected" data-method="mobile_money" onclick="selectPaymentMethod('mobile_money')">
+                <div class="payment-icon">📱</div>
+                <div class="payment-info">
+                  <h4>Mobile Money</h4>
+                  <p>MTN, Vodafone, AirtelTigo - INSTANT</p>
+                </div>
+              </div>
+              <div class="payment-option" data-method="card" onclick="selectPaymentMethod('card')">
+                <div class="payment-icon">💳</div>
+                <div class="payment-info">
+                  <h4>Debit/Credit Card</h4>
+                  <p>Visa, Mastercard</p>
+                </div>
+              </div>
+              <div class="payment-option" data-method="bank" onclick="selectPaymentMethod('bank')">
+                <div class="payment-icon">🏦</div>
+                <div class="payment-info">
+                  <h4>Bank Transfer</h4>
+                  <p>Direct bank payment</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-primary" id="payButton">
+            Pay GHS <span id="payAmount">0.00</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-content" id="loadingContent">
+      <div class="spinner"></div>
+      <h3 id="loadingText">Processing payment...</h3>
+      <p id="loadingSubtext">Please wait...</p>
+    </div>
+  </div>
+
+  <script>
+    // ========== CONFIGURATION ==========
+    const CONFIG = {
+      // 👇 REPLACE THIS WITH YOUR PAYSTACK PUBLIC KEY
+      paystackPublicKey: 'pk_live_YOUR_KEY_HERE', // GET FROM: https://dashboard.paystack.com/#/settings/developers
+      
+      // Your business details
+      businessPhone: '+233509929436',
+      businessName: 'Eat With Etor',
+      
+      // Webhook URL (we'll create this next)
+      webhookUrl: '/api/webhook', // This will be on Vercel
+    };
+
+    // ========== MENU DATA WITH CATEGORIES ==========
+    const MENU = {
+      breakfast: {
+        title: 'Breakfast Packages',
+        icon: '🍳',
+        items: [
+          { id: 1, name: 'Savory Sunrise', price: 85, desc: 'Waffles, pancakes, sausages and eggs', image: 'images/menu.jpeg', available: true },
+          { id: 2, name: 'Savory Toast Up', price: 75, desc: 'French toast, pancakes, sausages and chicken', image: 'images/menu.jpeg', available: true },
+          { id: 3, name: 'Classic Stack', price: 65, desc: 'French toast, sausages and eggs', image: 'images/menu.jpeg', available: true },
+        ]
+      },
+      loaded: {
+        title: 'Loaded Deals',
+        icon: '🍟',
+        items: [
+          { id: 4, name: 'Chicken Loaded', price: 85, desc: 'Crispy fries loaded with grilled chicken', image: 'images/menu.jpeg', available: true },
+          { id: 5, name: 'Beef Loaded', price: 95, desc: 'Fries topped with seasoned beef', image: 'images/menu.jpeg', available: false }, // OUT OF STOCK
+          { id: 6, name: 'Chickbeef Loaded', price: 120, desc: 'Best of both worlds - chicken & beef', image: 'images/menu.jpeg', available: true },
+        ]
+      },
+      snacks: {
+        title: 'Snacks & Bites',
+        icon: '🍗',
+        items: [
+          { id: 7, name: 'Chicken', price: 40, desc: 'Juicy grilled chicken pieces', image: 'images/menu.jpeg', available: true },
+          { id: 8, name: 'Pancakes', price: 35, desc: 'Fluffy pancakes', image: 'images/menu.jpeg', available: true },
+          { id: 9, name: 'Spring Rolls', price: 25, desc: 'Crispy spring rolls', image: 'images/menu.jpeg', available: true },
+          { id: 10, name: 'Samosa', price: 25, desc: 'Spiced samosas', image: 'images/menu.jpeg', available: true },
+          { id: 11, name: 'Sausages', price: 25, desc: 'Grilled sausages', image: 'images/menu.jpeg', available: true },
+          { id: 12, name: 'Waffles', price: 20, desc: 'Golden waffles', image: 'images/menu.jpeg', available: true },
+          { id: 13, name: 'Baked Chips', price: 15, desc: 'Crispy baked chips', image: 'images/menu.jpeg', available: true },
+        ]
+      },
+      beverages: {
+        title: 'Cool Sips',
+        icon: '🥤',
+        items: [
+          { id: 14, name: 'Milkshake', price: 50, desc: 'Creamy milkshake (various flavors)', image: 'images/menu.jpeg', available: true },
+          { id: 15, name: 'Coffee', price: 25, desc: 'Hot or Cold - freshly brewed', image: 'images/menu.jpeg', available: true },
+          { id: 16, name: 'Fruit Juice', price: 25, desc: 'Fresh fruit juice', image: 'images/menu.jpeg', available: true },
+          { id: 17, name: 'Sobolo', price: 25, desc: 'Traditional hibiscus drink', image: 'images/menu.jpeg', available: false }, // OUT OF STOCK
+          { id: 18, name: 'Tea', price: 15, desc: 'Hot tea', image: 'images/menu.jpeg', available: true },
+        ]
+      },
+      abele: {
+        title: 'Abele Walls',
+        icon: '🇬🇭',
+        items: [
+          { id: 19, name: 'Big Abele Wall', price: 15, desc: 'Large traditional Ghanaian abele', image: 'images/menu.jpeg', available: true },
+          { id: 20, name: 'Small Abele Wall', price: 8, desc: 'Small traditional Ghanaian abele', image: 'images/menu.jpeg', available: true },
+        ]
+      }
+    };
+
+    // ========== STATE ==========
+    let cart = [];
+    let selectedPaymentMethod = 'mobile_money';
+
+    // ========== RENDER MENU BY CATEGORIES ==========
+    function renderMenu() {
+      const container = document.getElementById('menuContainer');
+      let html = '';
+
+      for (const [categoryKey, category] of Object.entries(MENU)) {
+        html += `
+          <div class="category-section">
+            <div class="category-header">
+              <h2 class="category-title">
+                <span class="category-icon">${category.icon}</span>
+                ${category.title}
+              </h2>
+            </div>
+            <div class="menu-grid">
+              ${category.items.map(item => `
+                <div class="menu-item ${item.available ? '' : 'out-of-stock'}">
+                  <img src="${item.image}" alt="${item.name}">
+                  ${!item.available ? '<div class="out-of-stock-banner">OUT OF STOCK</div>' : ''}
+                  <div class="menu-item-content">
+                    <h3 class="menu-item-name">${item.name}</h3>
+                    <p class="menu-item-desc">${item.desc}</p>
+                    <div class="menu-item-footer">
+                      <div class="menu-item-price">GHS ${item.price.toFixed(2)}</div>
+                      ${item.available ? `
+                        <div class="quantity-controls">
+                          <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)">−</button>
+                          <span class="quantity-display" id="qty-${item.id}">0</span>
+                          <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                        </div>
+                      ` : '<span style="color: red; font-weight: bold; font-size: 0.9rem;">Unavailable</span>'}
+                    </div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      container.innerHTML = html;
+    }
+
+    // ========== GET ALL MENU ITEMS (FLAT) ==========
+    function getAllItems() {
+      let allItems = [];
+      for (const category of Object.values(MENU)) {
+        allItems = allItems.concat(category.items);
+      }
+      return allItems;
+    }
+
+    // ========== UPDATE QUANTITY ==========
+    function updateQuantity(itemId, change) {
+      const allItems = getAllItems();
+      const item = allItems.find(i => i.id === itemId);
+      if (!item || !item.available) return;
+
+      const cartItem = cart.find(i => i.id === itemId);
+      
+      if (cartItem) {
+        cartItem.quantity += change;
+        if (cartItem.quantity <= 0) {
+          cart = cart.filter(i => i.id !== itemId);
+        }
+      } else if (change > 0) {
+        cart.push({ ...item, quantity: 1 });
+      }
+
+      updateUI();
+    }
+
+    // ========== UPDATE UI ==========
+    function updateUI() {
+      const allItems = getAllItems();
+      
+      // Update quantity displays
+      allItems.forEach(item => {
+        const qtyEl = document.getElementById(`qty-${item.id}`);
+        if (qtyEl) {
+          const cartItem = cart.find(i => i.id === item.id);
+          qtyEl.textContent = cartItem ? cartItem.quantity : 0;
+        }
+      });
+
+      // Update cart button
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+      document.getElementById('cartCount').textContent = totalItems;
+      document.getElementById('cartTotal').textContent = totalPrice.toFixed(2);
+      document.getElementById('cartButton').disabled = totalItems === 0;
+
+      // Update checkout modal amounts
+      document.getElementById('subtotalAmount').textContent = totalPrice.toFixed(2);
+      document.getElementById('totalAmount').textContent = totalPrice.toFixed(2);
+      document.getElementById('payAmount').textContent = totalPrice.toFixed(2);
+    }
+
+    // ========== OPEN CHECKOUT ==========
+    function openCheckout() {
+      if (cart.length === 0) return;
+
+      // Render cart items
+      const cartItemsEl = document.getElementById('cartItems');
+      cartItemsEl.innerHTML = cart.map(item => `
+        <div class="cart-item">
+          <img src="${item.image}" alt="${item.name}">
+          <div class="cart-item-details">
+            <div class="cart-item-name">${item.name}</div>
+            <div>Qty: ${item.quantity}</div>
+            <div class="cart-item-price">GHS ${(item.price * item.quantity).toFixed(2)}</div>
+          </div>
+        </div>
+      `).join('');
+
+      document.getElementById('checkoutModal').classList.add('active');
+    }
+
+    // ========== CLOSE CHECKOUT ==========
+    function closeCheckout() {
+      document.getElementById('checkoutModal').classList.remove('active');
+    }
+
+    // ========== SELECT PAYMENT METHOD ==========
+    function selectPaymentMethod(method) {
+      selectedPaymentMethod = method;
+      document.querySelectorAll('.payment-option').forEach(el => {
+        el.classList.remove('selected');
+      });
+      document.querySelector(`[data-method="${method}"]`).classList.add('selected');
+    }
+
+    // ========== HANDLE CHECKOUT ==========
+    function handleCheckout(event) {
+      event.preventDefault();
+
+      const name = document.getElementById('customerName').value.trim();
+      let phone = document.getElementById('customerPhone').value.trim();
+      const email = document.getElementById('customerEmail').value.trim() || `customer_${Date.now()}@eatwithetor.com`;
+      const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+      // Convert phone to international format
+      if (phone.startsWith('0')) {
+        phone = '+233' + phone.substring(1);
+      }
+
+      // Show loading
+      showLoading('Initiating payment...', 'Please wait while we connect to Paystack');
+
+      // Determine channels based on payment method
+      let channels = [];
+      if (selectedPaymentMethod === 'mobile_money') {
+        channels = ['mobile_money'];
+      } else if (selectedPaymentMethod === 'card') {
+        channels = ['card'];
+      } else if (selectedPaymentMethod === 'bank') {
+        channels = ['bank'];
+      }
+
+      // Initialize Paystack
+      const handler = PaystackPop.setup({
+        key: CONFIG.paystackPublicKey, // 👈 PUBLIC KEY USED HERE
+        email: email,
+        amount: total * 100, // Convert to pesewas (smallest unit)
+        currency: 'GHS',
+        ref: 'EWE-' + Math.floor(Math.random() * 1000000000),
+        channels: channels,
+        metadata: {
+          custom_fields: [
+            { display_name: 'Customer Name', variable_name: 'customer_name', value: name },
+            { display_name: 'Phone Number', variable_name: 'phone_number', value: phone },
+            { display_name: 'Items', variable_name: 'order_items', value: JSON.stringify(cart.map(i => ({ name: i.name, qty: i.quantity, price: i.price }))) }
+          ]
+        },
+        callback: function(response) {
+          // Payment successful
+          handlePaymentSuccess(response, { name, phone, email, total });
+        },
+        onClose: function() {
+          // User closed payment popup
+          hideLoading();
+        }
+      });
+
+      hideLoading();
+      handler.openIframe();
+    }
+
+    // ========== HANDLE PAYMENT SUCCESS ==========
+    async function handlePaymentSuccess(response, customerData) {
+      showLoading('Payment Successful! 🎉', 'Confirming your order...', true);
+
+      // Send order details to webhook (which will send SMS)
+      try {
+        await fetch(CONFIG.webhookUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            event: 'charge.success',
+            data: {
+              reference: response.reference,
+              customer: customerData,
+              cart: cart,
+              amount: customerData.total
+            }
+          })
+        });
+      } catch (error) {
+        console.error('Webhook error:', error);
+      }
+
+      // Show success message
+      setTimeout(() => {
+        const loadingContent = document.getElementById('loadingContent');
+        loadingContent.innerHTML = `
+          <div class="success-icon">🎉</div>
+          <h2>Order Confirmed!</h2>
+          <p><strong>Reference:</strong> ${response.reference}</p>
+          <p style="margin-top: 1rem;">Thank you, <strong>${customerData.name}</strong>!</p>
+          <p style="margin-top: 0.5rem; color: #666;">Check your phone (${customerData.phone}) for SMS confirmation.</p>
+          <button class="btn-primary" onclick="resetOrder()" style="margin-top: 1.5rem;">Place Another Order</button>
+        `;
+      }, 1500);
+    }
+
+    // ========== RESET ORDER ==========
+    function resetOrder() {
+      cart = [];
+      updateUI();
+      closeCheckout();
+      hideLoading();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ========== SHOW/HIDE LOADING ==========
+    function showLoading(title, subtitle, isSuccess = false) {
+      const overlay = document.getElementById('loadingOverlay');
+      const content = document.getElementById('loadingContent');
+      
+      content.innerHTML = `
+        ${!isSuccess ? '<div class="spinner"></div>' : '<div class="success-icon">✓</div>'}
+        <h3>${title}</h3>
+        <p>${subtitle}</p>
+      `;
+      
+      overlay.classList.add('active');
+    }
+
+    function hideLoading() {
+      document.getElementById('loadingOverlay').classList.remove('active');
+    }
+
+    // ========== INITIALIZE ==========
+    renderMenu();
+    updateUI();
+
+    console.log('🍽️ Eat With Etor - Ready to take orders!');
+  </script>
+</body>
+</html>
