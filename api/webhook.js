@@ -51,12 +51,12 @@ export default async function handler(req, res) {
       });
 
       // SMS to customer
-      const customerMessage = `Thank you ${name} for ordering from Eat With Etor! Your payment of GHS ${(amount / 100).toFixed(2)} was successful. Ref: ${reference}. We're preparing your order now! 🍽️`;
+      const customerMessage = `Thank you ${name} for ordering from Eat With Etor! Your payment of GHS ${(amount / 100).toFixed(2)} was successful. Ref: ${reference}. We're preparing your order now!`;
       
       await sendSMS(phone, customerMessage);
 
       // SMS to YOU (business owner)
-      const businessMessage = `🔔 NEW ORDER!\nCustomer: ${name}\nPhone: ${phone}\nAmount: GHS ${(amount / 100).toFixed(2)}\nRef: ${reference}\nItems: ${orderItems || 'N/A'}`;
+      const businessMessage = `NEW ORDER!\nCustomer: ${name}\nPhone: ${phone}\nAmount: GHS ${(amount / 100).toFixed(2)}\nRef: ${reference}\nItems: ${orderItems || 'N/A'}`;
       
       await sendSMS(BUSINESS_PHONE, businessMessage);
 

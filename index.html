@@ -119,23 +119,6 @@
       100% { transform: translateY(-10vh); }
     }
 
-    #bg-frost {
-      overflow: hidden;
-    }
-    .frost-flake {
-      position: absolute;
-      top: -20px;
-      color: #A0D8EF;
-      text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
-      will-change: transform;
-      animation: frostFall linear infinite;
-      line-height: 1;
-    }
-    @keyframes frostFall {
-      0% { transform: translateY(-10vh) rotate(0deg); }
-      100% { transform: translateY(110vh) rotate(360deg); }
-    }
-
     /* ========== HEADER ========== */
     .header {
       position: sticky;
@@ -654,7 +637,7 @@
     /* ========== STICKY CART BAR ========== */
     .cart-bar {
       position: fixed;
-      bottom: 0;
+      bottom: 2.5rem;
       left: 50%;
       transform: translateX(-50%) translateY(100%);
       width: calc(100% - 2rem);
@@ -669,13 +652,13 @@
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
-      z-index: 200;
+      z-index: 250;
       box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.4);
       transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .cart-bar.visible {
-      transform: translateX(-50%) translateY(-1.5rem);
+      transform: translateX(-50%) translateY(0);
     }
 
     .cart-bar-left {
@@ -1341,10 +1324,10 @@
     .footer-review-btn {
       margin-top: 0.5rem;
       padding: 0.5rem 1rem;
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
+      background: #2d5a4a;
+      border: 1px solid #4a8b72;
       border-radius: 999px;
-      color: var(--accent-dusty-rose);
+      color: #fff;
       font-family: inherit;
       font-size: 0.9rem;
       font-weight: 600;
@@ -1353,9 +1336,9 @@
     }
 
     .footer-review-btn:hover {
-      background: rgba(217, 140, 95, 0.2);
-      border-color: var(--accent-terracotta);
-      color: var(--accent-golden);
+      background: #3d6b5a;
+      border-color: #5a9b82;
+      color: #fff;
     }
 
     .footer-bottom {
@@ -1371,28 +1354,34 @@
     .review-cta-section {
       text-align: center;
       padding: 2rem 1.5rem;
+      background: rgba(217, 140, 95, 0.08);
+      border-top: 1px solid var(--glass-border);
+      border-bottom: 1px solid var(--glass-border);
     }
 
     .review-cta-btn {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 0.5rem;
-      padding: 0.75rem 1.5rem;
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
+      padding: 0.85rem 1.75rem;
+      background: #2d5a4a;
+      border: 2px solid #4a8b72;
       border-radius: 999px;
-      color: var(--accent-dusty-rose);
+      color: #fff;
       font-family: inherit;
-      font-size: 0.95rem;
-      font-weight: 600;
+      font-size: 1rem;
+      font-weight: 700;
       cursor: pointer;
-      transition: background 0.2s, border-color 0.2s, color 0.2s;
+      transition: background 0.2s, border-color 0.2s, transform 0.2s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     }
 
     .review-cta-btn:hover {
-      background: rgba(217, 140, 95, 0.2);
-      border-color: var(--accent-terracotta);
-      color: var(--accent-golden);
+      background: #3d6b5a;
+      border-color: #5a9b82;
+      color: #fff;
+      transform: scale(1.03);
     }
 
     /* ========== REVIEW MODAL ========== */
@@ -1494,13 +1483,18 @@
       opacity: 0.9;
     }
 
-    /* ========== REVIEW TICKER (MARQUEE) ========== */
+    /* ========== FLOATING SLIDING REVIEWS TICKER ========== */
     .ticker-wrap {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
       overflow: hidden;
-      background: rgba(217, 140, 95, 0.12);
-      border-top: 1px solid var(--glass-border);
-      border-bottom: 1px solid var(--glass-border);
-      padding: 0.75rem 0;
+      background: rgba(26, 22, 20, 0.97);
+      border-top: 2px solid var(--accent-golden);
+      padding: 0.6rem 0;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
     }
 
     .ticker-track {
@@ -1615,7 +1609,6 @@
 <body>
   <div id="bg-kente" class="bg-layer"></div>
   <div id="bg-particles" class="bg-layer active"></div>
-  <div id="bg-frost" class="bg-layer"></div>
   <!-- Header -->
   <header class="header">
     <div class="header-left">
@@ -1741,8 +1734,8 @@
           <div class="form-group delivery-toggle-wrap">
             <label class="form-label">How do you want your order?</label>
             <div class="delivery-toggle" role="group" aria-label="Pickup or Delivery">
-              <button type="button" class="delivery-toggle-btn" data-mode="pickup" aria-pressed="false"><span aria-hidden="true">🏃‍♂️</span> Pickup</button>
-              <button type="button" class="delivery-toggle-btn active" data-mode="delivery" aria-pressed="true"><span aria-hidden="true">🛵</span> Delivery</button>
+              <button type="button" class="delivery-toggle-btn" data-mode="pickup" aria-pressed="false">Pickup</button>
+              <button type="button" class="delivery-toggle-btn active" data-mode="delivery" aria-pressed="true">Delivery</button>
             </div>
           </div>
           <div class="form-group">
@@ -1758,9 +1751,9 @@
             </div>
             <p class="form-hint" id="locationHint">Suggestions for KNUST/Kumasi areas, or enter any address.</p>
             <div class="quick-tap-chips">
-              <button type="button" class="location-chip" data-location="Brunei Hostel"><span aria-hidden="true">📍</span> Brunei</button>
-              <button type="button" class="location-chip" data-location="Republic Hall"><span aria-hidden="true">📍</span> Republic</button>
-              <button type="button" class="location-chip" data-location="Ayeduase Gate"><span aria-hidden="true">📍</span> Ayeduase</button>
+              <button type="button" class="location-chip" data-location="Brunei Hostel">Brunei</button>
+              <button type="button" class="location-chip" data-location="Republic Hall">Republic</button>
+              <button type="button" class="location-chip" data-location="Ayeduase Gate">Ayeduase</button>
             </div>
             <p id="locationError" class="location-error hidden" role="alert"></p>
           </div>
@@ -2163,21 +2156,13 @@
 
     function updateAmbientBackgrounds(cat) {
       var particles = document.getElementById('bg-particles');
-      var frost = document.getElementById('bg-frost');
-      if (!particles || !frost) return;
-      if (cat === 'beverages') {
-        particles.classList.remove('active');
-        frost.classList.add('active');
-      } else {
-        frost.classList.remove('active');
-        particles.classList.add('active');
-      }
+      if (!particles) return;
+      particles.classList.add('active');
     }
 
     function initBackgroundEffects() {
       var particlesEl = document.getElementById('bg-particles');
-      var frostEl = document.getElementById('bg-frost');
-      if (!particlesEl || !frostEl) return;
+      if (!particlesEl) return;
 
       for (var i = 0; i < 15; i++) {
         var spice = document.createElement('div');
@@ -2187,18 +2172,6 @@
         spice.style.animationDuration = (10 + Math.random() * 10) + 's';
         spice.style.animationDelay = (Math.random() * -10) + 's';
         particlesEl.appendChild(spice);
-      }
-
-      for (var j = 0; j < 15; j++) {
-        var frost = document.createElement('div');
-        frost.className = 'frost-flake';
-        frost.setAttribute('aria-hidden', 'true');
-        frost.textContent = '\u2744\uFE0F';
-        frost.style.left = (Math.random() * 100) + '%';
-        frost.style.animationDuration = (5 + Math.random() * 5) + 's';
-        frost.style.animationDelay = (Math.random() * -8) + 's';
-        frost.style.fontSize = (12 + Math.random() * 14) + 'px';
-        frostEl.appendChild(frost);
       }
     }
 
