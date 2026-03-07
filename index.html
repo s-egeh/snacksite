@@ -41,6 +41,101 @@
       padding-bottom: 120px;
     }
 
+    /* ========== AMBIENT BACKGROUNDS (Feature 15) ========== */
+    .bg-layer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      transition: opacity 0.8s ease;
+    }
+    .bg-layer.active { opacity: 1; }
+    .bg-layer:not(.active) { opacity: 0; }
+
+    header, main, .footer {
+      position: relative;
+      z-index: 10;
+    }
+
+    #bg-kente {
+      opacity: 1;
+      background-color: #0D0D0D;
+      background-image:
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 2px,
+          #151515 2px,
+          #151515 3px
+        ),
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 4px,
+          #151515 4px,
+          #151515 5px
+        ),
+        repeating-linear-gradient(
+          135deg,
+          transparent 0,
+          transparent 8px,
+          rgba(21, 21, 21, 0.6) 8px,
+          rgba(21, 21, 21, 0.6) 9px
+        );
+      background-size: 40px 40px, 40px 40px, 24px 24px;
+      background-position: 0 0, 0 0, 0 0;
+      animation: kentePan 25s linear infinite;
+    }
+    @keyframes kentePan {
+      0% { background-position: 0 0, 0 0, 0 0; }
+      100% { background-position: 40px 0, 0 40px, 24px 24px; }
+    }
+
+    #bg-particles {
+      overflow: hidden;
+    }
+    .spice-particle {
+      position: absolute;
+      bottom: -20px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(217, 140, 95, 0.2);
+      filter: blur(4px);
+      will-change: transform;
+      animation: spiceDrift linear infinite;
+    }
+    .spice-particle:nth-child(odd) {
+      background: rgba(242, 192, 120, 0.2);
+      width: 12px;
+      height: 8px;
+      border-radius: 50%;
+    }
+    @keyframes spiceDrift {
+      0% { transform: translateY(110vh); }
+      100% { transform: translateY(-10vh); }
+    }
+
+    #bg-frost {
+      overflow: hidden;
+    }
+    .frost-flake {
+      position: absolute;
+      top: -20px;
+      color: #A0D8EF;
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+      will-change: transform;
+      animation: frostFall linear infinite;
+      line-height: 1;
+    }
+    @keyframes frostFall {
+      0% { transform: translateY(-10vh) rotate(0deg); }
+      100% { transform: translateY(110vh) rotate(360deg); }
+    }
+
     /* ========== HEADER ========== */
     .header {
       position: sticky;
@@ -888,6 +983,128 @@
       transform: none;
     }
 
+    /* Pickup vs Delivery toggle */
+    .delivery-toggle-wrap { margin-bottom: 1rem; }
+    .delivery-toggle {
+      display: flex;
+      gap: 0.5rem;
+      border-radius: 999px;
+      padding: 4px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(8px);
+    }
+    .delivery-toggle-btn {
+      flex: 1;
+      padding: 0.65rem 1rem;
+      border: none;
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--accent-dusty-rose);
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+    .delivery-toggle-btn:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: #e8e4e0;
+    }
+    .delivery-toggle-btn.active {
+      background: var(--accent-terracotta);
+      color: #1a1a1a;
+    }
+    .delivery-toggle-btn.active:hover {
+      background: #e09a6a;
+      color: #1a1a1a;
+    }
+
+    /* Location field & dropdown */
+    .location-input-wrap { position: relative; }
+    .location-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      margin: 4px 0 0;
+      padding: 0.5rem 0;
+      list-style: none;
+      background: rgba(13, 13, 13, 0.95);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      max-height: 200px;
+      overflow-y: auto;
+      z-index: 20;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+    .location-dropdown.hidden { display: none; }
+    .location-dropdown li {
+      padding: 0.6rem 1rem;
+      cursor: pointer;
+      color: #e8e4e0;
+      font-size: 0.95rem;
+      transition: background 0.15s;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+      font-family: inherit;
+    }
+    .location-dropdown li:hover,
+    .location-dropdown li[aria-selected="true"] {
+      background: rgba(217, 140, 95, 0.2);
+      color: var(--accent-terracotta);
+    }
+    .location-dropdown .location-dropdown-empty {
+      padding: 1rem;
+      color: var(--accent-dusty-rose);
+      font-size: 0.875rem;
+      text-align: center;
+      line-height: 1.4;
+    }
+    .location-dropdown .location-dropdown-empty strong { display: block; margin-bottom: 0.25rem; }
+
+    /* Quick-tap chips */
+    .quick-tap-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    .location-chip {
+      padding: 0.4rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid var(--glass-border);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--accent-dusty-rose);
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+    .location-chip:hover,
+    .location-chip:focus {
+      background: rgba(217, 140, 95, 0.25);
+      border-color: var(--accent-terracotta);
+      color: #e8e4e0;
+    }
+
+    /* Out-of-zone error */
+    .location-error {
+      margin-top: 0.5rem;
+      font-size: 0.875rem;
+      color: #e57373;
+      font-weight: 500;
+    }
+    .location-error.hidden { display: none; }
+
     .btn-whatsapp {
       width: 100%;
       padding: 0.75rem 1rem;
@@ -1119,6 +1336,26 @@
 
     .footer-social a:hover {
       text-decoration: underline;
+    }
+
+    .footer-review-btn {
+      margin-top: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 999px;
+      color: var(--accent-dusty-rose);
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+
+    .footer-review-btn:hover {
+      background: rgba(217, 140, 95, 0.2);
+      border-color: var(--accent-terracotta);
+      color: var(--accent-golden);
     }
 
     .footer-bottom {
@@ -1376,6 +1613,9 @@
   </style>
 </head>
 <body>
+  <div id="bg-kente" class="bg-layer"></div>
+  <div id="bg-particles" class="bg-layer active"></div>
+  <div id="bg-frost" class="bg-layer"></div>
   <!-- Header -->
   <header class="header">
     <div class="header-left">
@@ -1396,7 +1636,6 @@
       <button type="button" class="pill" data-category="snacks" role="tab">Snacks</button>
       <button type="button" class="pill" data-category="beverages" role="tab">Cool Sips</button>
       <button type="button" class="pill" data-category="abele" role="tab">Abele Walls</button>
-      <button type="button" class="pill ghana-theme" data-category="kickoffFusion" role="tab">Kickoff Fusion ★</button>
     </div>
   </div>
 
@@ -1499,20 +1738,31 @@
             <label class="form-label" for="customerEmail">Email (optional)</label>
             <input type="email" class="form-input" id="customerEmail" placeholder="your@email.com">
           </div>
-          <div class="form-group">
-            <label class="form-label" for="deliveryType">Delivery type</label>
-            <div class="form-input form-input--blank" id="deliveryType" tabindex="0" role="button" title="Click for info"> </div>
-            <p class="form-hint form-hint--na" id="deliveryTypeNa" aria-live="polite"></p>
+          <div class="form-group delivery-toggle-wrap">
+            <label class="form-label">How do you want your order?</label>
+            <div class="delivery-toggle" role="group" aria-label="Pickup or Delivery">
+              <button type="button" class="delivery-toggle-btn" data-mode="pickup" aria-pressed="false"><span aria-hidden="true">🏃‍♂️</span> Pickup</button>
+              <button type="button" class="delivery-toggle-btn active" data-mode="delivery" aria-pressed="true"><span aria-hidden="true">🛵</span> Delivery</button>
+            </div>
           </div>
           <div class="form-group">
             <label class="form-label" for="deliveryTime">Delivery time</label>
-            <div class="form-input form-input--blank" id="deliveryTime" tabindex="0" role="button" title="Click for info"> </div>
-            <p class="form-hint form-hint--na" id="deliveryTimeNa" aria-live="polite"></p>
+            <input type="text" class="form-input" id="deliveryTime" placeholder="e.g. ASAP, 12:00" aria-describedby="deliveryTimeHint">
+            <p class="form-hint" id="deliveryTimeHint">When you want your order</p>
           </div>
-          <div class="form-group">
-            <label class="form-label" for="location">Location</label>
-            <div class="form-input form-input--blank" id="location" tabindex="0" role="button" title="Click for info"> </div>
-            <p class="form-hint form-hint--na" id="locationNa" aria-live="polite"></p>
+          <div class="form-group" id="locationWrapper">
+            <label class="form-label" for="location">Location / Address</label>
+            <div class="location-input-wrap">
+              <input type="text" class="form-input" id="location" placeholder="Start typing KNUST/Kumasi area..." autocomplete="off" aria-describedby="locationHint locationError" aria-autocomplete="list" aria-controls="locationDropdown">
+              <ul id="locationDropdown" class="location-dropdown hidden" role="listbox" aria-expanded="false"></ul>
+            </div>
+            <p class="form-hint" id="locationHint">Suggestions for KNUST/Kumasi areas, or enter any address.</p>
+            <div class="quick-tap-chips">
+              <button type="button" class="location-chip" data-location="Brunei Hostel"><span aria-hidden="true">📍</span> Brunei</button>
+              <button type="button" class="location-chip" data-location="Republic Hall"><span aria-hidden="true">📍</span> Republic</button>
+              <button type="button" class="location-chip" data-location="Ayeduase Gate"><span aria-hidden="true">📍</span> Ayeduase</button>
+            </div>
+            <p id="locationError" class="location-error hidden" role="alert"></p>
           </div>
           <div class="form-group">
             <label class="form-label">Payment</label>
@@ -1605,6 +1855,10 @@
           <a href="#">Facebook</a>
         </div>
       </div>
+      <div>
+        <h3>Your feedback</h3>
+        <button type="button" class="footer-review-btn" onclick="openReviewModal()">Leave a Review</button>
+      </div>
     </div>
     <div class="footer-bottom">
       <p>&copy; Eat With Etor. All rights reserved.</p>
@@ -1619,6 +1873,14 @@
       businessName: 'Eat With Etor',
       webhookUrl: '/api/webhook',
     };
+
+    // KNUST/Kumasi area suggestions (customers can also enter any address)
+    const KUMASI_LOCATIONS = [
+      'Republic Hall', 'Independence Hall', 'University Hall (Katanga)', 'Unity Hall (Conti)', 'Africa Hall', 'Queens Hall',
+      'Brunei Hostel', 'Baby Brunei', 'Gaza Hostel', 'SRC Hostel', 'Tek Credit Hostel', 'Chancellor\'s Hall (Hall 7)', 'Alumni Hostel',
+      'Ayeduase Gate', 'Evandy Hostel', 'Frontline Hostel', 'Frankies Hostel', 'No Wahala Hostel', 'Show Boy Hostel', 'Canam Hall', 'Outlook Hostel', 'Orange Hostel', 'White House Hostel', 'Crystal Rose Hostel',
+      'Bomso Gate', 'Tech Junction', 'Kotei', 'Kentinkrono', 'Boadi', 'Weweso', 'Ayigya'
+    ];
 
     const MENU = {
       breakfast: {
@@ -1647,15 +1909,15 @@
           { id: 8, name: 'Pancakes', price: 35, desc: 'Fluffy pancakes', image: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=600&q=80', available: true },
           { id: 9, name: 'Spring Rolls', price: 25, desc: 'Crispy spring rolls', image: 'https://images.unsplash.com/photo-1762631884776-e1a2e5cd6d8d?auto=format&fit=crop&w=600&q=80', available: true },
           { id: 10, name: 'Samosa', price: 25, desc: 'Spiced samosas', image: 'https://images.unsplash.com/photo-1747008624832-e068ee496908?auto=format&fit=crop&w=600&q=80', available: true },
-          { id: 11, name: 'Sausages', price: 25, desc: 'Grilled sausages', image: 'https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=600&q=80', available: true },
+          { id: 11, name: 'Sausages', price: 25, desc: 'Grilled sausages', image: 'https://fussfreeflavours.com/wp-content/uploads/2023/09/Air-Fryer-Sausages-featured.jpg', available: true },
           { id: 12, name: 'Waffles', price: 20, desc: 'Golden waffles', image: 'https://images.unsplash.com/photo-1562376552-0d160a2f238d?q=80&w=1025&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', available: true },
           { id: 13, name: 'Baked Chips', price: 15, desc: 'Crispy baked chips', image: 'https://images.unsplash.com/photo-1759465201025-0f4a876efa47?q=80&w=770&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', available: true },
-          { id: 21, name: 'Chicken Drumsticks', price: 45, desc: 'Crispy fried chicken drumsticks', image: 'https://images.unsplash.com/photo-1764756995069-4a0b5f31d792?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', available: true },
-          { id: 22, name: 'Chicken Pieces', price: 38, desc: 'Tender chicken pieces, your way', image: 'https://images.unsplash.com/photo-1586793783658-261cddf883ef?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', available: true },
-          { id: 23, name: 'Spicy Yam and Plantain Stir Fry', price: 55, desc: 'Spiced yam and plantain stir fry', image: 'https://joyfulcook.com/wp-content/uploads/2025/02/EDDA2A43-6423-4366-B256-6B00E9533B47.jpeg', available: true },
-          { id: 24, name: 'Peppered Gizzard', price: 48, desc: 'Spicy peppered gizzard', image: 'https://feastandbeyond.co.uk/wp-content/uploads/2023/10/peppered-gizzard.jpg', available: true },
-          { id: 25, name: 'French Fries', price: 28, desc: 'Crispy golden french fries', image: 'https://images.unsplash.com/photo-1723763246578-99e614b2a91b?q=80&w=1306&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', available: true },
-          { id: 27, name: 'Waffles', price: 22, desc: 'Classic Belgian-style waffles', image: 'https://images.unsplash.com/photo-1562376552-0d160a2f238d?q=80&w=1025&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', available: true },
+          { id: 21, name: 'Chicken Drumsticks', price: 35, desc: '2 for GHS 35 – Crispy fried chicken drumsticks', image: 'https://images.unsplash.com/photo-1764756995069-4a0b5f31d792?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', available: true },
+          { id: 22, name: 'Chicken Pieces', price: 25, desc: '5 for GHS 25 – Tender chicken pieces, your way', image: 'https://images.unsplash.com/photo-1586793783658-261cddf883ef?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', available: true },
+          { id: 23, name: 'Spicy Yam and Plantain Stir Fry', price: 40, desc: 'Spiced yam and plantain stir fry', image: 'https://joyfulcook.com/wp-content/uploads/2025/02/EDDA2A43-6423-4366-B256-6B00E9533B47.jpeg', available: true },
+          { id: 24, name: 'Peppered Gizzard', price: 15, desc: '2 for GHS 15 – Spicy peppered gizzard', image: 'https://feastandbeyond.co.uk/wp-content/uploads/2023/10/peppered-gizzard.jpg', available: true },
+          { id: 25, name: 'French Fries', price: 30, desc: 'Crispy golden french fries', image: 'https://images.unsplash.com/photo-1723763246578-99e614b2a91b?q=80&w=1306&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', available: true },
+          { id: 27, name: 'Waffles', price: 25, desc: '2 for GHS 25 – Classic Belgian-style waffles', image: 'https://images.unsplash.com/photo-1562376552-0d160a2f238d?q=80&w=1025&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', available: true },
         ]
       },
       beverages: {
@@ -1679,25 +1941,12 @@
           { id: 20, name: 'Small Abele Wall', price: 8, desc: 'Small traditional Ghanaian abele', image: 'https://image.api.sportal365.com/process/smp-images-production/pulse.com.gh/24072024/17ad9182-2983-4a96-a651-0336dd7878cf?operations=autocrop(1200:630)', available: true },
         ]
       },
-      kickoffFusion: {
-        title: 'Kickoff Fusion ★',
-        icon: '',
-        items: [
-          { id: 26, name: 'Oreo Milkshake', price: 50, desc: 'Creamy Oreo milkshake', image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=600&q=80', available: true },
-          { id: 28, name: 'Oreo Milkshake (Extra Oreo)', price: 60, desc: 'Creamy Oreo milkshake with extra Oreo', image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=600&q=80', available: true },
-          { id: 25, name: 'French Fries', price: 30, desc: 'Crispy golden french fries', image: 'https://images.unsplash.com/photo-1723763246578-99e614b2a91b?q=80&w=1306&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', available: true },
-          { id: 27, name: 'Waffles', price: 25, desc: '2 for GHS 25 – Classic Belgian-style waffles', image: 'https://images.unsplash.com/photo-1562376552-0d160a2f238d?q=80&w=1025&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', available: true },
-          { id: 24, name: 'Peppered Gizzard', price: 15, desc: '2 for GHS 15 – Spicy peppered gizzard', image: 'https://feastandbeyond.co.uk/wp-content/uploads/2023/10/peppered-gizzard.jpg', available: true },
-          { id: 21, name: 'Chicken Drumsticks', price: 35, desc: '2 for GHS 35 – Crispy fried chicken drumsticks', image: 'https://images.unsplash.com/photo-1764756995069-4a0b5f31d792?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', available: true },
-          { id: 22, name: 'Chicken Pieces', price: 25, desc: '5 for GHS 25 – Tender chicken pieces, your way', image: 'https://images.unsplash.com/photo-1586793783658-261cddf883ef?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', available: true },
-          { id: 23, name: 'Spicy Yam and Plantain Stir Fry', price: 40, desc: 'Spiced yam and plantain stir fry', image: 'https://joyfulcook.com/wp-content/uploads/2025/02/EDDA2A43-6423-4366-B256-6B00E9533B47.jpeg', available: true },
-        ]
-      }
     };
 
     let cart = [];
     let selectedCategory = 'all';
     let selectedPaymentMethod = 'cod';
+    let deliveryMode = 'delivery';
 
     function getSubtotal() {
       return cart.reduce((s, i) => s + i.price * i.quantity, 0);
@@ -1730,7 +1979,7 @@
             <h2 class="category-title ${key === 'kickoffFusion' ? 'kickoff-title' : ''}" id="section-${key}">${category.title}</h2>
             <div class="menu-grid">
               ${category.items.map(item => `
-                <article class="menu-card ${item.available ? '' : 'out-of-stock'}" data-item-id="${item.id}" data-item-name="${(item.name + ' ' + item.desc).toLowerCase()}">
+                <article class="menu-card ${item.available ? '' : 'out-of-stock'}" data-item-id="${item.id}" data-category="${key}" data-item-name="${(item.name + ' ' + item.desc).toLowerCase()}">
                   <div class="card-image-wrap">
                     <div class="card-image-blob" aria-hidden="true"></div>
                     ${!item.available ? '<span class="sold-out-badge">Sold Out</span>' : ''}
@@ -1843,7 +2092,7 @@
         });
       } else {
         dropdown.innerHTML = '<div class="search-no-results">' +
-          'Oops! We couldn\'t find anything for "' + query.replace(/</g, '&lt;') + '".' +
+          'Oops! We couldn\'t find anything for "' + escapeHtml(query) + '".' +
           '<div class="hint">How about some French Fries?</div></div>';
         dropdown.classList.remove('hidden');
         if (menuContainer) menuContainer.classList.add('menu-grid-hidden');
@@ -1865,11 +2114,13 @@
 
     // ========== FLY-TO-CART ==========
     function flyToCart(ev, itemId) {
-      const card = (ev && ev.target && ev.target.closest) ? ev.target.closest('.menu-card') : null;
-      const img = card ? card.querySelector('.card-image-wrap img') : null;
-      const cartBar = document.getElementById('cartBar');
+      var card = (ev && ev.target && ev.target.closest) ? ev.target.closest('.menu-card') : null;
+      var section = card ? card.closest('section') : null;
+      var categoryKey = section ? section.getAttribute('data-category') : null;
+      var img = card ? card.querySelector('.card-image-wrap img') : null;
+      var cartBar = document.getElementById('cartBar');
       if (!img || !cartBar) {
-        updateQuantity(itemId, 1);
+        updateQuantity(itemId, 1, categoryKey);
         return;
       }
       const rect = img.getBoundingClientRect();
@@ -1892,13 +2143,15 @@
       clone.addEventListener('transitionend', function onEnd() {
         clone.removeEventListener('transitionend', onEnd);
         clone.remove();
-        updateQuantity(itemId, 1);
+        updateQuantity(itemId, 1, categoryKey);
         cartBar.classList.add('bump');
-        setTimeout(() => cartBar.classList.remove('bump'), 400);
+        setTimeout(function() { cartBar.classList.remove('bump'); }, 400);
       }, { once: true });
     }
 
     document.getElementById('searchInput').addEventListener('input', applySearchFilter);
+
+    initDeliveryLocationUI();
 
     document.addEventListener('click', function (e) {
       const searchWrap = document.querySelector('.search-wrap');
@@ -1908,46 +2161,87 @@
       }
     });
 
+    function updateAmbientBackgrounds(cat) {
+      var particles = document.getElementById('bg-particles');
+      var frost = document.getElementById('bg-frost');
+      if (!particles || !frost) return;
+      if (cat === 'beverages') {
+        particles.classList.remove('active');
+        frost.classList.add('active');
+      } else {
+        frost.classList.remove('active');
+        particles.classList.add('active');
+      }
+    }
+
+    function initBackgroundEffects() {
+      var particlesEl = document.getElementById('bg-particles');
+      var frostEl = document.getElementById('bg-frost');
+      if (!particlesEl || !frostEl) return;
+
+      for (var i = 0; i < 15; i++) {
+        var spice = document.createElement('div');
+        spice.className = 'spice-particle';
+        spice.setAttribute('aria-hidden', 'true');
+        spice.style.left = (Math.random() * 100) + '%';
+        spice.style.animationDuration = (10 + Math.random() * 10) + 's';
+        spice.style.animationDelay = (Math.random() * -10) + 's';
+        particlesEl.appendChild(spice);
+      }
+
+      for (var j = 0; j < 15; j++) {
+        var frost = document.createElement('div');
+        frost.className = 'frost-flake';
+        frost.setAttribute('aria-hidden', 'true');
+        frost.textContent = '\u2744\uFE0F';
+        frost.style.left = (Math.random() * 100) + '%';
+        frost.style.animationDuration = (5 + Math.random() * 5) + 's';
+        frost.style.animationDelay = (Math.random() * -8) + 's';
+        frost.style.fontSize = (12 + Math.random() * 14) + 'px';
+        frostEl.appendChild(frost);
+      }
+    }
+
+    initBackgroundEffects();
+
     document.querySelectorAll('.pill').forEach(btn => {
       btn.addEventListener('click', () => {
         selectedCategory = btn.getAttribute('data-category');
         document.querySelectorAll('.pill').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
+        btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
         applyCategoryFilter();
+        updateAmbientBackgrounds(selectedCategory);
       });
     });
 
-    [['deliveryType', 'deliveryTypeNa'], ['deliveryTime', 'deliveryTimeNa'], ['location', 'locationNa']].forEach(function(pair) {
-      var el = document.getElementById(pair[0]);
-      var hint = document.getElementById(pair[1]);
-      if (el && hint) {
-        el.addEventListener('click', function() { hint.textContent = 'Not applicable'; });
-        el.addEventListener('focus', function() { hint.textContent = 'Not applicable'; });
-      }
-    });
-
     // ========== CART ==========
-    function updateQuantity(itemId, delta) {
-      const all = getAllItems();
-      const item = all.find(i => i.id === itemId);
+    function updateQuantity(itemId, delta, categoryKey) {
+      let item = null;
+      if (categoryKey && MENU[categoryKey] && MENU[categoryKey].items) {
+        item = MENU[categoryKey].items.find(function(i) { return i.id === itemId; });
+      }
+      if (!item) item = getAllItems().find(function(i) { return i.id === itemId; });
       if (!item || !item.available) return;
-      let entry = cart.find(i => i.id === itemId);
+      var entry = cart.find(function(i) { return i.id === itemId; });
       if (entry) {
         entry.quantity += delta;
-        if (entry.quantity <= 0) cart = cart.filter(i => i.id !== itemId);
+        if (entry.quantity <= 0) cart = cart.filter(function(i) { return i.id !== itemId; });
       } else if (delta > 0) {
-        cart.push({ ...item, quantity: 1 });
+        cart.push({ id: item.id, name: item.name, price: item.price, image: item.image, desc: item.desc, quantity: 1 });
       }
       updateUI();
     }
 
     function expandCardAdd(ev, itemId) {
-      const card = ev && ev.target && ev.target.closest ? ev.target.closest('.menu-card') : null;
-      const wrap = card ? card.querySelector('.card-add-wrap') : null;
+      var card = ev && ev.target && ev.target.closest ? ev.target.closest('.menu-card') : null;
+      var wrap = card ? card.querySelector('.card-add-wrap') : null;
       if (!wrap) return;
       wrap.classList.add('expanded');
-      const entry = cart.find(i => i.id === itemId);
-      if (!entry || entry.quantity === 0) updateQuantity(itemId, 1);
+      var section = card ? card.closest('section') : null;
+      var categoryKey = section ? section.getAttribute('data-category') : null;
+      var entry = cart.find(function(i) { return i.id === itemId; });
+      if (!entry || entry.quantity === 0) updateQuantity(itemId, 1, categoryKey);
     }
 
     function updateUI() {
@@ -2014,10 +2308,9 @@
     function openCheckout() {
       if (cart.length === 0) return;
       renderModalCart();
-      ['deliveryTypeNa', 'deliveryTimeNa', 'locationNa'].forEach(function(id) {
-        var h = document.getElementById(id);
-        if (h) h.textContent = '';
-      });
+      var wrapper = document.getElementById('locationWrapper');
+      if (wrapper) wrapper.style.display = deliveryMode === 'delivery' ? 'block' : 'none';
+      updatePayButtonState();
       document.getElementById('checkoutModal').classList.add('active');
     }
 
@@ -2034,7 +2327,119 @@
       });
     }
 
-    const MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/fvx7reyauip2bhdl34qlmikfv5wryqce';
+    function handleDeliveryToggle(mode) {
+      deliveryMode = mode;
+      document.querySelectorAll('.delivery-toggle-btn').forEach(function(btn) {
+        var isActive = btn.getAttribute('data-mode') === mode;
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      });
+      var wrapper = document.getElementById('locationWrapper');
+      var locationInput = document.getElementById('location');
+      var dropdown = document.getElementById('locationDropdown');
+      var locationError = document.getElementById('locationError');
+      if (wrapper) wrapper.style.display = mode === 'delivery' ? 'block' : 'none';
+      if (locationInput) { locationInput.value = ''; locationInput.removeAttribute('aria-invalid'); }
+      if (dropdown) { dropdown.classList.add('hidden'); dropdown.innerHTML = ''; dropdown.setAttribute('aria-expanded', 'false'); }
+      if (locationError) { locationError.classList.add('hidden'); locationError.textContent = ''; }
+      updatePayButtonState();
+    }
+
+    function isLocationValid() {
+      var loc = document.getElementById('location');
+      if (!loc) return true;
+      var v = (loc.value || '').trim();
+      return v.length > 0;
+    }
+
+    function updatePayButtonState() {
+      var btn = document.getElementById('payButton');
+      if (!btn) return;
+      var disabled = deliveryMode === 'delivery' && !isLocationValid();
+      btn.disabled = disabled;
+    }
+
+    function handleLocationSearch() {
+      var input = document.getElementById('location');
+      var dropdown = document.getElementById('locationDropdown');
+      var locationError = document.getElementById('locationError');
+      if (!input || !dropdown) return;
+      var q = (input.value || '').trim().toLowerCase();
+      locationError.classList.add('hidden');
+      locationError.textContent = '';
+      if (q.length === 0) {
+        dropdown.classList.add('hidden');
+        dropdown.innerHTML = '';
+        dropdown.setAttribute('aria-expanded', 'false');
+        updatePayButtonState();
+        return;
+      }
+      var matches = KUMASI_LOCATIONS.filter(function(name) { return name.toLowerCase().indexOf(q) !== -1; });
+      if (matches.length > 0) {
+        dropdown.innerHTML = matches.map(function(name) {
+          return '<li role="option" tabindex="-1" data-location="' + name.replace(/"/g, '&quot;') + '">' + name + '</li>';
+        }).join('');
+        dropdown.classList.remove('hidden');
+        dropdown.setAttribute('aria-expanded', 'true');
+        dropdown.querySelectorAll('li').forEach(function(li, i) {
+          li.addEventListener('click', function() {
+            input.value = li.getAttribute('data-location');
+            dropdown.classList.add('hidden');
+            dropdown.innerHTML = '';
+            dropdown.setAttribute('aria-expanded', 'false');
+            input.removeAttribute('aria-invalid');
+            locationError.classList.add('hidden');
+            locationError.textContent = '';
+            updatePayButtonState();
+          });
+        });
+      } else {
+        dropdown.innerHTML = '<li class="location-dropdown-empty" role="option" tabindex="-1"><strong>⚠️ Out of zone</strong>Delivery currently restricted to KNUST/Kumasi areas. Please select a valid location or choose Pickup.</li>';
+        dropdown.classList.remove('hidden');
+        dropdown.setAttribute('aria-expanded', 'true');
+        input.setAttribute('aria-invalid', 'true');
+        if (locationError) {
+          locationError.textContent = 'Delivery is only available in KNUST/Kumasi areas. Pick a suggestion or choose Pickup.';
+          locationError.classList.remove('hidden');
+        }
+      }
+      updatePayButtonState();
+    }
+
+    function initDeliveryLocationUI() {
+      document.querySelectorAll('.delivery-toggle-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() { handleDeliveryToggle(btn.getAttribute('data-mode')); });
+      });
+      var locationInput = document.getElementById('location');
+      if (locationInput) {
+        locationInput.addEventListener('input', handleLocationSearch);
+        locationInput.addEventListener('focus', handleLocationSearch);
+        locationInput.addEventListener('blur', function() {
+          setTimeout(function() {
+            var d = document.getElementById('locationDropdown');
+            if (d) d.classList.add('hidden');
+          }, 200);
+        });
+      }
+      document.querySelectorAll('.location-chip').forEach(function(chip) {
+        chip.addEventListener('click', function() {
+          var loc = chip.getAttribute('data-location');
+          if (loc && locationInput) {
+            locationInput.value = loc;
+            document.getElementById('locationDropdown').classList.add('hidden');
+            document.getElementById('locationError').classList.add('hidden');
+            document.getElementById('locationError').textContent = '';
+            locationInput.removeAttribute('aria-invalid');
+            updatePayButtonState();
+          }
+        });
+      });
+      document.addEventListener('click', function(e) {
+        var wrap = document.querySelector('.location-input-wrap');
+        var d = document.getElementById('locationDropdown');
+        if (d && wrap && !wrap.contains(e.target)) d.classList.add('hidden');
+      });
+    }
 
     function formatOrderSummary(cartItems) {
       if (!cartItems || cartItems.length === 0) return '';
@@ -2046,7 +2451,7 @@
     }
 
     function sendOrderToWebhook(orderData) {
-      return fetch(MAKE_WEBHOOK_URL, {
+      return fetch('/api/order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(orderData)
@@ -2060,9 +2465,24 @@
       let phone = document.getElementById('customerPhone').value.trim();
       const email = (document.getElementById('customerEmail').value.trim() || `customer_${Date.now()}@eatwithetor.com`);
       const total = getTotal();
-      const deliveryType = 'Not applicable';
-      const deliveryTime = 'Not applicable';
-      const location = 'Not applicable';
+      var deliveryTimeEl = document.getElementById('deliveryTime');
+      var locationEl = document.getElementById('location');
+      const deliveryType = deliveryMode === 'delivery' ? 'Delivery' : 'Pickup';
+      const deliveryTime = (deliveryTimeEl && deliveryTimeEl.value.trim()) ? deliveryTimeEl.value.trim() : '';
+      var location = '';
+      if (deliveryMode === 'delivery' && locationEl) {
+        location = (locationEl.value || '').trim();
+        if (!location) {
+          e.preventDefault();
+          var errEl = document.getElementById('locationError');
+          if (errEl) {
+            errEl.textContent = 'Please enter a delivery address or switch to Pickup.';
+            errEl.classList.remove('hidden');
+          }
+          locationEl.focus();
+          return;
+        }
+      }
       if (phone.startsWith('0')) phone = '+233' + phone.slice(1);
 
       var orderSummary = formatOrderSummary(cart);
@@ -2168,9 +2588,9 @@
         : {
             customerName: customerData.name,
             customerPhone: customerData.phone,
-            deliveryType: customerData.deliveryType || 'Not applicable',
-            deliveryTime: customerData.deliveryTime || 'Not applicable',
-            location: customerData.location || 'Not applicable',
+            deliveryType: customerData.deliveryType || '',
+            deliveryTime: customerData.deliveryTime || '',
+            location: customerData.location || '',
             paymentMethod: 'Paystack',
             paymentStatus: 'Paid',
             totalAmount: (customerData.total || 0).toFixed(2),
@@ -2306,8 +2726,9 @@
     }
 
     function escapeHtml(s) {
-      const div = document.createElement('div');
-      div.textContent = s;
+      if (s == null || s === undefined) return '';
+      var div = document.createElement('div');
+      div.textContent = String(s);
       return div.innerHTML;
     }
 

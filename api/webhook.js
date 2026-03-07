@@ -1,13 +1,13 @@
 // api/webhook.js
 // This runs on Vercel servers when Paystack sends payment confirmations
+// All secrets are read from Vercel Environment Variables (see VERCEL_ENV_SETUP.md)
 
 const crypto = require('crypto');
 
-// 👇 REPLACE THESE WITH YOUR ACTUAL KEYS
-const PAYSTACK_SECRET_KEY = 'sk_live_37157de9805dd431183cb7365316a7fcbae3db1c'; // Get from Paystack Dashboard
-const HUBTEL_CLIENT_ID = 'YOUR_HUBTEL_CLIENT_ID'; // Get from Hubtel
-const HUBTEL_CLIENT_SECRET = 'YOUR_HUBTEL_SECRET'; // Get from Hubtel
-let MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/fvx7reyauip2bhdl34qlmikfv5wryqc';
+const PAYSTACK_SECRET_KEY = process.env.PAYSTACK_SECRET_KEY;
+const HUBTEL_CLIENT_ID = process.env.HUBTEL_CLIENT_ID;
+const HUBTEL_CLIENT_SECRET = process.env.HUBTEL_CLIENT_SECRET;
+const BUSINESS_PHONE = process.env.BUSINESS_PHONE || '+233509929436';
 
 export default async function handler(req, res) {
   // Only accept POST requests
@@ -22,6 +22,10 @@ export default async function handler(req, res) {
       .update(JSON.stringify(req.body))
       .digest('hex');
 
+    if (!PAYSTACK_SECRET_KEY) {
+      console.error('PAYSTACK_SECRET_KEY is not set');
+      return res.status(500).json({ error: 'Server misconfiguration' });
+    }
     if (hash !== req.headers['x-paystack-signature']) {
       console.error('Invalid signature');
       return res.status(401).json({ error: 'Invalid signature' });
@@ -54,7 +58,7 @@ export default async function handler(req, res) {
       // SMS to YOU (business owner)
       const businessMessage = `🔔 NEW ORDER!\nCustomer: ${name}\nPhone: ${phone}\nAmount: GHS ${(amount / 100).toFixed(2)}\nRef: ${reference}\nItems: ${orderItems || 'N/A'}`;
       
-      await sendSMS('+233509929436', businessMessage); // Your business number
+      await sendSMS(BUSINESS_PHONE, businessMessage);
 
       return res.status(200).json({ 
         success: true, 
@@ -83,6 +87,10 @@ async function sendSMS(phone, message) {
       formattedPhone = '+233' + phone.substring(1);
     }
 
+    if (!HUBTEL_CLIENT_ID || !HUBTEL_CLIENT_SECRET) {
+      console.warn('Hubtel credentials not set; skipping SMS');
+      return { skipped: true };
+    }
     const auth = Buffer.from(`${HUBTEL_CLIENT_ID}:${HUBTEL_CLIENT_SECRET}`).toString('base64');
     
     const response = await fetch('https://smsc.hubtel.com/v1/messages/send', {
