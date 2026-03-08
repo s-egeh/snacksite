@@ -637,12 +637,13 @@
     /* ========== STICKY CART BAR ========== */
     .cart-bar {
       position: fixed;
-      bottom: 2.5rem;
+      bottom: 0;
       left: 50%;
       transform: translateX(-50%) translateY(100%);
       width: calc(100% - 2rem);
       max-width: 480px;
       padding: 0.75rem 1.25rem;
+      margin-bottom: 1rem;
       background: var(--glass-bg);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
@@ -655,10 +656,14 @@
       z-index: 250;
       box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.4);
       transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      visibility: hidden;
+      pointer-events: none;
     }
 
     .cart-bar.visible {
       transform: translateX(-50%) translateY(0);
+      visibility: visible;
+      pointer-events: auto;
     }
 
     .cart-bar-left {
@@ -1483,18 +1488,13 @@
       opacity: 0.9;
     }
 
-    /* ========== FLOATING SLIDING REVIEWS TICKER ========== */
+    /* ========== REVIEW TICKER (above footer) ========== */
     .ticker-wrap {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      z-index: 200;
       overflow: hidden;
-      background: rgba(26, 22, 20, 0.97);
-      border-top: 2px solid var(--accent-golden);
-      padding: 0.6rem 0;
-      box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
+      background: rgba(217, 140, 95, 0.12);
+      border-top: 1px solid var(--glass-border);
+      border-bottom: 1px solid var(--glass-border);
+      padding: 0.75rem 0;
     }
 
     .ticker-track {
@@ -2243,8 +2243,10 @@
       document.getElementById('totalAmount').textContent = total.toFixed(2);
       document.getElementById('payAmount').textContent = total.toFixed(2);
       const bar = document.getElementById('cartBar');
-      if (totalItems > 0) bar.classList.add('visible');
-      else bar.classList.remove('visible');
+      if (bar) {
+        if (totalItems > 0) bar.classList.add('visible');
+        else bar.classList.remove('visible');
+      }
       if (document.getElementById('checkoutModal').classList.contains('active')) {
         renderModalCart();
         if (cart.length === 0) closeCheckout();
