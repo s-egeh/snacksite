@@ -919,6 +919,29 @@
       border-color: var(--accent-terracotta);
     }
 
+    .form-input-wrap {
+      position: relative;
+    }
+
+    .form-input-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--accent-terracotta);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .form-input-icon svg {
+      display: block;
+    }
+
+    .form-input--icon {
+      padding-left: 2.75rem;
+    }
+
     .form-hint {
       font-size: 0.75rem;
       color: var(--accent-dusty-rose);
@@ -1175,12 +1198,19 @@
       justify-content: center;
       margin-right: 12px;
       flex-shrink: 0;
+      color: var(--accent-terracotta);
     }
 
-    .payment-logos .logo-svg svg {
+    .payment-logos .logo-svg svg,
+    .payment-icon {
       height: 24px;
       width: 24px;
       display: block;
+    }
+
+    .payment-icon {
+      color: var(--accent-terracotta);
+      flex-shrink: 0;
     }
 
     .payment-label h4 {
@@ -1629,6 +1659,8 @@
       <button type="button" class="pill" data-category="snacks" role="tab">Snacks</button>
       <button type="button" class="pill" data-category="beverages" role="tab">Cool Sips</button>
       <button type="button" class="pill" data-category="abele" role="tab">Abele Walls</button>
+      <button type="button" class="pill" data-category="gravy" role="tab">Gravy Deals</button>
+      <button type="button" class="pill" data-category="lunch" role="tab">Lunch Packages</button>
     </div>
   </div>
 
@@ -1724,7 +1756,15 @@
           </div>
           <div class="form-group">
             <label class="form-label" for="customerPhone">MoMo Number *</label>
-            <input type="tel" class="form-input" id="customerPhone" placeholder="0501234567" pattern="[0-9]{10}" required aria-required="true">
+            <div class="form-input-wrap">
+              <span class="form-input-icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect>
+                  <path d="M12 18h.01"></path>
+                </svg>
+              </span>
+              <input type="tel" class="form-input form-input--icon" id="customerPhone" placeholder="0501234567" pattern="[0-9]{10}" required aria-required="true">
+            </div>
             <p class="form-hint">10-digit number (e.g. 0501234567)</p>
           </div>
           <div class="form-group">
@@ -1763,7 +1803,7 @@
               <div class="payment-option" data-method="mobile_money" onclick="selectPaymentMethod('mobile_money')" role="button" tabindex="0" aria-pressed="false">
                 <div class="payment-option-left">
                   <div class="payment-logos">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/MTN_Logo.svg/200px-MTN_Logo.svg.png" alt="MTN MoMo" height="24" width="auto" loading="lazy" class="payment-logo-img">
+                    <span class="logo-svg" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#D98C5F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect><path d="M12 18h.01"></path></svg></span>
                   </div>
                   <div class="payment-label">
                     <h4>MoMo</h4>
@@ -1775,7 +1815,7 @@
               <div class="payment-option" data-method="card" onclick="selectPaymentMethod('card')" role="button" tabindex="0" aria-pressed="false">
                 <div class="payment-option-left">
                   <div class="payment-logos">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/200px-Mastercard-logo.svg.png" alt="Mastercard" height="24" width="auto" loading="lazy" class="payment-logo-img">
+                    <span class="logo-svg" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#D98C5F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"></rect><line x1="2" x2="22" y1="10" y2="10"></line></svg></span>
                   </div>
                   <div class="payment-label">
                     <h4>Card</h4>
@@ -1880,18 +1920,17 @@
         title: 'Breakfast Packages',
         icon: '',
         items: [
-          { id: 1, name: 'Savory Sunrise', price: 85, desc: 'Waffles, pancakes, sausages and eggs', image: 'https://images.unsplash.com/photo-1559095253-30e69b68344e?q=80&w=1207&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', available: true },
-          { id: 2, name: 'Savory Toast Up', price: 75, desc: 'French toast, pancakes, sausages and chicken', image: 'https://images.unsplash.com/photo-1638668554305-a5a6ef16ac37?q=80&w=686&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', available: true },
-          { id: 3, name: 'Classic Stack', price: 65, desc: 'French toast, sausages and eggs', image: 'https://images.unsplash.com/photo-1565511216576-b2a1be0722cd?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', available: true },
+          { id: 1, name: 'Savory Sunrise', price: 75, desc: 'Waffles, crepes, sausages and eggs', image: 'https://images.unsplash.com/photo-1559095253-30e69b68344e?q=80&w=1207&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', available: true },
+          { id: 2, name: 'Savory Toast', price: 90, desc: 'French toast, crepes, sausages and chicken', image: 'https://images.unsplash.com/photo-1638668554305-a5a6ef16ac37?q=80&w=686&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', available: true },
+          { id: 3, name: 'Classic Stack', price: 150, desc: 'Crepes, waffles, sausages, French toast, chicken and eggs', image: 'https://images.unsplash.com/photo-1565511216576-b2a1be0722cd?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', available: true },
         ]
       },
       loaded: {
         title: 'Loaded Deals',
         icon: '',
         items: [
-          { id: 4, name: 'Chicken Loaded', price: 85, desc: 'Crispy fries loaded with grilled chicken', image: 'https://images.unsplash.com/photo-1652111866933-bfe06583bf89?auto=format&fit=crop&w=600&q=80', available: true },
-          { id: 5, name: 'Beef Loaded', price: 95, desc: 'Fries topped with seasoned beef', image: 'https://images.unsplash.com/photo-1608877907149-a206d75ba011?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', available: false },
-          { id: 6, name: 'Chickbeef Loaded', price: 120, desc: 'Best of both worlds - chicken & beef', image: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=600&q=80', available: true },
+          { id: 29, name: 'Regular Loaded Fries', price: 90, desc: 'Crispy fries loaded with your choice of toppings', image: 'https://images.unsplash.com/photo-1652111866933-bfe06583bf89?auto=format&fit=crop&w=600&q=80', available: true },
+          { id: 30, name: 'Large Loaded Fries', price: 120, desc: 'Generous portion of loaded fries', image: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=600&q=80', available: true },
         ]
       },
       snacks: {
@@ -1905,12 +1944,13 @@
           { id: 11, name: 'Sausages', price: 25, desc: 'Grilled sausages', image: 'https://fussfreeflavours.com/wp-content/uploads/2023/09/Air-Fryer-Sausages-featured.jpg', available: true },
           { id: 12, name: 'Waffles', price: 20, desc: 'Golden waffles', image: 'https://images.unsplash.com/photo-1562376552-0d160a2f238d?q=80&w=1025&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', available: true },
           { id: 13, name: 'Baked Chips', price: 15, desc: 'Crispy baked chips', image: 'https://images.unsplash.com/photo-1759465201025-0f4a876efa47?q=80&w=770&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', available: true },
-          { id: 21, name: 'Chicken Drumsticks', price: 35, desc: '2 for GHS 35 – Crispy fried chicken drumsticks', image: 'https://images.unsplash.com/photo-1764756995069-4a0b5f31d792?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', available: true },
-          { id: 22, name: 'Chicken Pieces', price: 25, desc: '5 for GHS 25 – Tender chicken pieces, your way', image: 'https://images.unsplash.com/photo-1586793783658-261cddf883ef?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', available: true },
+          { id: 31, name: 'Small Drumstick', price: 15, desc: 'Crispy fried chicken drumstick', image: 'https://images.unsplash.com/photo-1764756995069-4a0b5f31d792?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', available: true },
+          { id: 32, name: 'Large Drumstick', price: 25, desc: 'Crispy fried chicken drumstick', image: 'https://images.unsplash.com/photo-1764756995069-4a0b5f31d792?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', available: true },
+          { id: 22, name: 'Chicken Pieces', price: 30, desc: 'Tender chicken pieces, your way', image: 'https://images.unsplash.com/photo-1586793783658-261cddf883ef?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', available: true },
+          { id: 33, name: 'Chicken Wings (4 pieces)', price: 50, desc: 'Crispy chicken wings', image: 'https://images.unsplash.com/photo-1608039829572-78516f82174a?auto=format&fit=crop&w=600&q=80', available: true },
           { id: 23, name: 'Spicy Yam and Plantain Stir Fry', price: 40, desc: 'Spiced yam and plantain stir fry', image: 'https://joyfulcook.com/wp-content/uploads/2025/02/EDDA2A43-6423-4366-B256-6B00E9533B47.jpeg', available: true },
           { id: 24, name: 'Peppered Gizzard', price: 15, desc: '2 for GHS 15 – Spicy peppered gizzard', image: 'https://feastandbeyond.co.uk/wp-content/uploads/2023/10/peppered-gizzard.jpg', available: true },
           { id: 25, name: 'French Fries', price: 30, desc: 'Crispy golden french fries', image: 'https://images.unsplash.com/photo-1723763246578-99e614b2a91b?q=80&w=1306&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', available: true },
-          { id: 27, name: 'Waffles', price: 25, desc: '2 for GHS 25 – Classic Belgian-style waffles', image: 'https://images.unsplash.com/photo-1562376552-0d160a2f238d?q=80&w=1025&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', available: true },
         ]
       },
       beverages: {
@@ -1920,18 +1960,36 @@
           { id: 14, name: 'Milkshake', price: 50, desc: 'Creamy milkshake (various flavors)', image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=600&q=80', available: true },
           { id: 15, name: 'Coffee', price: 25, desc: 'Hot or Cold - freshly brewed', image: 'https://images.unsplash.com/photo-1578314675249-a6910f80cc4e?auto=format&fit=crop&w=600&q=80', available: true },
           { id: 16, name: 'Fruit Juice', price: 25, desc: 'Fresh fruit juice', image: 'https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=600&q=80', available: true },
-          { id: 17, name: 'Sobolo', price: 25, desc: 'Traditional hibiscus drink', image: 'https://images.unsplash.com/photo-1499638673689-79a0b5115d87?auto=format&fit=crop&w=600&q=80', available: false },
+          { id: 17, name: 'Sobolo', price: 20, desc: 'Traditional hibiscus drink', image: 'https://images.unsplash.com/photo-1499638673689-79a0b5115d87?auto=format&fit=crop&w=600&q=80', available: false },
           { id: 18, name: 'Tea', price: 15, desc: 'Hot tea', image: 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=600&q=80', available: true },
-          { id: 26, name: 'Oreo Milkshake', price: 50, desc: 'Creamy Oreo milkshake', image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=600&q=80', available: true },
-          { id: 28, name: 'Oreo Milkshake (Extra Oreo)', price: 60, desc: 'Creamy Oreo milkshake with extra Oreo', image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=600&q=80', available: true },
+          { id: 26, name: 'Oreo Milkshake', price: 55, desc: 'Creamy Oreo milkshake. Extra toppings: +10 GHS', image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=600&q=80', available: true },
+          { id: 34, name: 'Biscoff Milkshake', price: 50, desc: 'Creamy Biscoff milkshake. Extra toppings: +10 GHS', image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=600&q=80', available: true },
         ]
       },
       abele: {
         title: 'Abele Walls',
         icon: '',
         items: [
-          { id: 19, name: 'Big Abele Wall', price: 15, desc: 'Large traditional Ghanaian abele', image: 'https://image.api.sportal365.com/process/smp-images-production/pulse.com.gh/24072024/17ad9182-2983-4a96-a651-0336dd7878cf?operations=autocrop(1200:630)', available: true },
-          { id: 20, name: 'Small Abele Wall', price: 8, desc: 'Small traditional Ghanaian abele', image: 'https://image.api.sportal365.com/process/smp-images-production/pulse.com.gh/24072024/17ad9182-2983-4a96-a651-0336dd7878cf?operations=autocrop(1200:630)', available: true },
+          { id: 19, name: 'Abele Walls', price: 5, desc: 'Traditional Ghanaian abele', image: 'https://image.api.sportal365.com/process/smp-images-production/pulse.com.gh/24072024/17ad9182-2983-4a96-a651-0336dd7878cf?operations=autocrop(1200:630)', available: true },
+        ]
+      },
+      gravy: {
+        title: 'Gravy Deals',
+        icon: '',
+        items: [
+          { id: 35, name: 'Assorted Meat Gravy', price: 150, desc: 'Per bowl', image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80', available: true },
+          { id: 36, name: 'Goat Meat Gravy', price: 120, desc: 'Per bowl', image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80', available: true },
+          { id: 37, name: 'Cow Meat Gravy', price: 100, desc: 'Per bowl', image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80', available: true },
+          { id: 38, name: 'Corned Beef Gravy', price: 95, desc: 'Per bowl', image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80', available: true },
+          { id: 39, name: 'Chicken Gravy', price: 80, desc: 'Per bowl', image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80', available: true },
+        ]
+      },
+      lunch: {
+        title: 'Lunch Packages',
+        icon: '',
+        items: [
+          { id: 40, name: 'Lunch Package 1', price: 350, desc: 'Fried rice, Chicken, Ceres or Don Simon, Noodles, Angwamo, Salad', image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80', available: true },
+          { id: 41, name: 'Lunch Package 2', price: 400, desc: 'Assorted jollof, Assorted Noodles, Salad, Ceres or Don Simon, Fried yam, Chicken', image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80', available: true },
         ]
       },
     };
