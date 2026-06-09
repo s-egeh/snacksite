@@ -360,6 +360,115 @@
       50% { background-position: 100% center; }
     }
 
+    .pill.havana-theme {
+      background: #FFF8E1;
+      border: 2px solid #FF2D95;
+      color: #FFE135;
+      font-weight: 700;
+      text-shadow: 1px 1px 0 #FF2D95, -1px 0 0 #FF2D95, 0 1px 4px rgba(0, 0, 0, 0.35);
+    }
+    .pill.havana-theme:hover {
+      color: #fff;
+      background: #FF2D95;
+      border-color: #FFE135;
+      box-shadow: 0 0 14px rgba(255, 45, 149, 0.45);
+    }
+    .pill.havana-theme.active {
+      background: linear-gradient(135deg, #FF2D95 0%, #E91E8C 100%);
+      border-color: #FFE135;
+      color: #FFE135;
+      box-shadow: 0 0 18px rgba(255, 45, 149, 0.55);
+    }
+
+    /* ========== HAVANA FEST ========== */
+    .havana-promo-section {
+      position: relative;
+      background:
+        radial-gradient(ellipse 90% 70% at 50% 0%, rgba(255, 225, 53, 0.18) 0%, transparent 65%),
+        linear-gradient(180deg, rgba(253, 246, 216, 0.14) 0%, rgba(255, 45, 149, 0.06) 100%);
+      border: 2px solid #FF2D95;
+      border-radius: 24px;
+      padding: 2rem 1.25rem 2.25rem;
+      margin: 2.5rem 0;
+      box-shadow: 0 0 48px rgba(255, 45, 149, 0.15), inset 0 0 40px rgba(255, 248, 225, 0.04);
+      transition: box-shadow 0.4s ease, border-color 0.4s ease;
+    }
+    .havana-promo-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      gap: 0.75rem;
+    }
+    .havana-promo-banner {
+      max-width: 340px;
+      width: 100%;
+      height: auto;
+      border-radius: 16px;
+      border: 3px solid #FF2D95;
+      box-shadow: 0 8px 28px rgba(255, 45, 149, 0.4);
+      background: #FFF8E1;
+    }
+    .havana-promo-section .category-title.havana-title {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .havana-promo-subtitle {
+      color: #FFE135;
+      font-size: 0.95rem;
+      font-weight: 500;
+      max-width: 28rem;
+      line-height: 1.5;
+    }
+    .havana-promo-section .menu-card {
+      border-color: rgba(255, 45, 149, 0.3);
+      background: rgba(91, 192, 235, 0.06);
+    }
+    .havana-promo-section .menu-card:hover {
+      border-color: #FF2D95;
+      box-shadow: 0 10px 36px rgba(91, 192, 235, 0.22), 0 0 0 1px rgba(255, 225, 53, 0.25);
+    }
+    .havana-promo-section .card-price {
+      color: #FFE135;
+    }
+    .havana-subsection {
+      margin-bottom: 2.25rem;
+    }
+    .havana-subsection:last-child {
+      margin-bottom: 0;
+    }
+    .havana-subsection-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #FFE135;
+      text-shadow: 1px 1px 0 #FF2D95, -1px 0 0 #FF2D95;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid rgba(255, 45, 149, 0.45);
+      letter-spacing: 0.02em;
+    }
+
+    body.havana-mode #bg-kente {
+      background-color: #14100a;
+      background-image:
+        radial-gradient(ellipse 100% 80% at 50% 20%, rgba(255, 225, 53, 0.1) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 50% at 80% 60%, rgba(255, 45, 149, 0.08) 0%, transparent 50%),
+        repeating-linear-gradient(90deg, transparent, transparent 2px, #101820 2px, #101820 3px);
+    }
+
+    body.havana-mode .hero {
+      display: none;
+    }
+
     /* ========== HERO ========== */
     .hero {
       background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(217, 140, 95, 0.15), transparent 60%),
@@ -1661,6 +1770,7 @@
       <button type="button" class="pill" data-category="abele" role="tab">Abele Walls</button>
       <button type="button" class="pill" data-category="gravy" role="tab">Gravy Deals</button>
       <button type="button" class="pill" data-category="lunch" role="tab">Lunch Packages</button>
+      <button type="button" class="pill havana-theme" data-category="havana" role="tab" aria-label="Havana Fest event menu">Havana Fest</button>
     </div>
   </div>
 
@@ -1916,6 +2026,33 @@
     ];
 
     const MENU = {
+      havana: {
+        title: 'Havana Fest',
+        icon: '',
+        sections: [
+          {
+            title: 'Snacks & Bites',
+            items: [
+              { id: 9, name: 'Spring Rolls', price: 25, desc: 'Crispy spring rolls', image: 'https://images.unsplash.com/photo-1762631884776-e1a2e5cd6d8d?auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&w=600&q=80', available: true },
+              { id: 10, name: 'Samosa', price: 25, desc: 'Spiced samosas', image: 'https://images.unsplash.com/photo-1747008624832-e068ee496908?auto=format&fit=crop&w=600&q=80', available: true },
+              { id: 24, name: 'Peppered Gizzard', price: 15, desc: '2 for GHS 15 – Spicy peppered gizzard', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAZgKngiSHJlRm6dzfrFfU9cNv2uGh1F4INA&s', available: true },
+            ]
+          },
+          {
+            title: 'Loaded Fries',
+            items: [
+              { id: 29, name: 'Regular Loaded Fries', price: 90, desc: 'Crispy fries loaded with your choice of toppings', image: 'loaded_fries_et-removebg-preview.png', available: true },
+              { id: 30, name: 'Large Loaded Fries', price: 120, desc: 'Generous portion of loaded fries', image: 'loaded_fries_et-removebg-preview.png', available: true },
+            ]
+          },
+          {
+            title: 'Cool Sips',
+            items: [
+              { id: 17, name: 'Sobolo', price: 20, desc: 'Traditional hibiscus drink', image: 'sobolo_top_v-removebg-preview.png', available: true },
+            ]
+          },
+        ]
+      },
       breakfast: {
         title: 'Breakfast Packages',
         icon: '',
@@ -1929,15 +2066,15 @@
         title: 'Loaded Deals',
         icon: '',
         items: [
-          { id: 29, name: 'Regular Loaded Fries', price: 90, desc: 'Crispy fries loaded with your choice of toppings', image: 'https://images.unsplash.com/photo-1652111866933-bfe06583bf89?auto=format&fit=crop&w=600&q=80', available: true },
-          { id: 30, name: 'Large Loaded Fries', price: 120, desc: 'Generous portion of loaded fries', image: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=600&q=80', available: true },
+          { id: 29, name: 'Regular Loaded Fries', price: 90, desc: 'Crispy fries loaded with your choice of toppings', image: 'loaded_fries_et-removebg-preview.png', available: true },
+          { id: 30, name: 'Large Loaded Fries', price: 120, desc: 'Generous portion of loaded fries', image: 'loaded_fries_et-removebg-preview.png', available: true },
         ]
       },
       snacks: {
         title: 'Snacks & Bites',
         icon: '',
         items: [
-          { id: 7, name: 'Chicken', price: 40, desc: 'Juicy grilled chicken pieces', image: 'https://images.unsplash.com/photo-1598103442097-8b74394b95c6?auto=format&fit=crop&w=600&q=80', available: true },
+          { id: 7, name: 'Chicken', price: 40, desc: 'Juicy grilled chicken pieces', image: 'Jamaican%20Jerk%20Chicken.jpg.jpeg', available: true },
           { id: 8, name: 'Pancakes', price: 35, desc: 'Fluffy pancakes', image: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=600&q=80', available: true },
           { id: 9, name: 'Spring Rolls', price: 25, desc: 'Crispy spring rolls', image: 'https://images.unsplash.com/photo-1762631884776-e1a2e5cd6d8d?auto=format&fit=crop&w=600&q=80', available: true },
           { id: 10, name: 'Samosa', price: 25, desc: 'Spiced samosas', image: 'https://images.unsplash.com/photo-1747008624832-e068ee496908?auto=format&fit=crop&w=600&q=80', available: true },
@@ -1947,9 +2084,9 @@
           { id: 31, name: 'Small Drumstick', price: 15, desc: 'Crispy fried chicken drumstick', image: 'https://images.unsplash.com/photo-1764756995069-4a0b5f31d792?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', available: true },
           { id: 32, name: 'Large Drumstick', price: 25, desc: 'Crispy fried chicken drumstick', image: 'https://images.unsplash.com/photo-1764756995069-4a0b5f31d792?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', available: true },
           { id: 22, name: 'Chicken Pieces', price: 30, desc: 'Tender chicken pieces, your way', image: 'https://images.unsplash.com/photo-1586793783658-261cddf883ef?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', available: true },
-          { id: 33, name: 'Chicken Wings (4 pieces)', price: 50, desc: 'Crispy chicken wings', image: 'https://images.unsplash.com/photo-1608039829572-78516f82174a?auto=format&fit=crop&w=600&q=80', available: true },
+          { id: 33, name: 'Chicken Wings (4 pieces)', price: 50, desc: 'Crispy chicken wings', image: 'https://d21klxpge3tttg.cloudfront.net/wp-content/uploads/2020/01/featured-honey-soy-chicken-wings-1024x640.jpg', available: true },
           { id: 23, name: 'Spicy Yam and Plantain Stir Fry', price: 40, desc: 'Spiced yam and plantain stir fry', image: 'https://joyfulcook.com/wp-content/uploads/2025/02/EDDA2A43-6423-4366-B256-6B00E9533B47.jpeg', available: true },
-          { id: 24, name: 'Peppered Gizzard', price: 15, desc: '2 for GHS 15 – Spicy peppered gizzard', image: 'https://feastandbeyond.co.uk/wp-content/uploads/2023/10/peppered-gizzard.jpg', available: true },
+          { id: 24, name: 'Peppered Gizzard', price: 15, desc: '2 for GHS 15 – Spicy peppered gizzard', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAZgKngiSHJlRm6dzfrFfU9cNv2uGh1F4INA&s', available: true },
           { id: 25, name: 'French Fries', price: 30, desc: 'Crispy golden french fries', image: 'https://images.unsplash.com/photo-1723763246578-99e614b2a91b?q=80&w=1306&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', available: true },
         ]
       },
@@ -1957,13 +2094,13 @@
         title: 'Cool Sips',
         icon: '',
         items: [
-          { id: 14, name: 'Milkshake', price: 50, desc: 'Creamy milkshake (various flavors)', image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=600&q=80', available: true },
+          { id: 14, name: 'Milkshake', price: 50, desc: 'Creamy milkshake (various flavors)', image: 'Milkshake.jpg.jpeg', available: true },
           { id: 15, name: 'Coffee', price: 25, desc: 'Hot or Cold - freshly brewed', image: 'https://images.unsplash.com/photo-1578314675249-a6910f80cc4e?auto=format&fit=crop&w=600&q=80', available: true },
           { id: 16, name: 'Fruit Juice', price: 25, desc: 'Fresh fruit juice', image: 'https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=600&q=80', available: true },
-          { id: 17, name: 'Sobolo', price: 20, desc: 'Traditional hibiscus drink', image: 'https://images.unsplash.com/photo-1499638673689-79a0b5115d87?auto=format&fit=crop&w=600&q=80', available: false },
+          { id: 17, name: 'Sobolo', price: 20, desc: 'Traditional hibiscus drink', image: 'sobolo_top_v-removebg-preview.png', available: true },
           { id: 18, name: 'Tea', price: 15, desc: 'Hot tea', image: 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=600&q=80', available: true },
           { id: 26, name: 'Oreo Milkshake', price: 55, desc: 'Creamy Oreo milkshake. Extra toppings: +10 GHS', image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=600&q=80', available: true },
-          { id: 34, name: 'Biscoff Milkshake', price: 50, desc: 'Creamy Biscoff milkshake. Extra toppings: +10 GHS', image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=600&q=80', available: true },
+          { id: 34, name: 'Biscoff Milkshake', price: 50, desc: 'Creamy Biscoff milkshake. Extra toppings: +10 GHS', image: 'https://gimmethatflavor.com/wp-content/uploads/2021/11/Biscoff-Milkshake-9.jpg', available: true },
         ]
       },
       abele: {
@@ -1977,19 +2114,19 @@
         title: 'Gravy Deals',
         icon: '',
         items: [
-          { id: 35, name: 'Assorted Meat Gravy', price: 150, desc: 'Per bowl', image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80', available: true },
-          { id: 36, name: 'Goat Meat Gravy', price: 120, desc: 'Per bowl', image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80', available: true },
-          { id: 37, name: 'Cow Meat Gravy', price: 100, desc: 'Per bowl', image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80', available: true },
-          { id: 38, name: 'Corned Beef Gravy', price: 95, desc: 'Per bowl', image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80', available: true },
-          { id: 39, name: 'Chicken Gravy', price: 80, desc: 'Per bowl', image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80', available: true },
+          { id: 35, name: 'Assorted Meat Gravy', price: 150, desc: 'Per bowl', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgE4M74GSAefTSjRkYb5xArHuSX4D0Vbpaug&s', available: true },
+          { id: 36, name: 'Goat Meat Gravy', price: 120, desc: 'Per bowl', image: 'https://sinfullyspicy.com/wp-content/uploads/2023/03/1200-by-1200-images-3.jpg', available: true },
+          { id: 37, name: 'Cow Meat Gravy', price: 100, desc: 'Per bowl', image: 'https://img.taste.com.au/g2N1sXxo/w1200-h1200-cfill-q80/taste/2021/05/slow-cooker-gravy-beef-and-mushroom-stew-171034-3.jpg', available: true },
+          { id: 38, name: 'Corned Beef Gravy', price: 95, desc: 'Per bowl', image: 'https://i.guim.co.uk/img/media/70e8e211b7a198a42be7db778d173a4fa9c44c53/0_392_7360_4417/master/7360.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=b83cdefc82dbd028079c1902c2e7b617', available: true },
+          { id: 39, name: 'Chicken Gravy', price: 80, desc: 'Per bowl', image: 'https://www.sharmispassions.com/wp-content/uploads/2022/06/ChickenGravy1.jpg', available: true },
         ]
       },
       lunch: {
         title: 'Lunch Packages',
         icon: '',
         items: [
-          { id: 40, name: 'Lunch Package 1', price: 350, desc: 'Fried rice, Chicken, Ceres or Don Simon, Noodles, Angwamo, Salad', image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80', available: true },
-          { id: 41, name: 'Lunch Package 2', price: 400, desc: 'Assorted jollof, Assorted Noodles, Salad, Ceres or Don Simon, Fried yam, Chicken', image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80', available: true },
+          { id: 40, name: 'Lunch Package 1', price: 350, desc: 'Fried rice, Chicken, Ceres or Don Simon, Noodles, Angwamo, Salad', image: 'https://cdn.loveandlemons.com/wp-content/uploads/2025/02/301_LLBlog_FriedRice_47795-recipe.jpg', available: true },
+          { id: 41, name: 'Lunch Package 2', price: 400, desc: 'Assorted jollof, Assorted Noodles, Salad, Ceres or Don Simon, Fried yam, Chicken', image: 'https://www.africanbites.com/wp-content/uploads/2014/03/IMG_0557.jpg', available: true },
         ]
       },
     };
@@ -2013,23 +2150,25 @@
       return getSubtotal() + getServiceCharge();
     }
 
+    function getCategoryItems(category) {
+      if (category.sections) {
+        return category.sections.reduce(function (acc, sec) {
+          return acc.concat(sec.items || []);
+        }, []);
+      }
+      return category.items || [];
+    }
+
     function getAllItems() {
       let list = [];
-      Object.values(MENU).forEach(cat => list.push(...cat.items));
+      Object.values(MENU).forEach(function (cat) {
+        list.push.apply(list, getCategoryItems(cat));
+      });
       return list;
     }
 
-    // ========== RENDER MENU ==========
-    function renderMenu() {
-      const container = document.getElementById('menuContainer');
-      let html = '';
-      for (const [key, category] of Object.entries(MENU)) {
-        const sectionClass = key === 'kickoffFusion' ? 'category-section kickoff-promo-section' : 'category-section';
-        html += `
-          <section class="${sectionClass}" data-category="${key}" aria-labelledby="section-${key}" id="${key}">
-            <h2 class="category-title ${key === 'kickoffFusion' ? 'kickoff-title' : ''}" id="section-${key}">${category.title}</h2>
-            <div class="menu-grid">
-              ${category.items.map(item => `
+    function renderMenuCardHtml(item, key) {
+      return `
                 <article class="menu-card ${item.available ? '' : 'out-of-stock'}" data-item-id="${item.id}" data-category="${key}" data-item-name="${(item.name + ' ' + item.desc).toLowerCase()}">
                   <div class="card-image-wrap">
                     <div class="card-image-blob" aria-hidden="true"></div>
@@ -2053,9 +2192,43 @@
                       </div>
                     </div>
                   ` : ''}
-                </article>
-              `).join('')}
-            </div>
+                </article>`;
+    }
+
+    // ========== RENDER MENU ==========
+    function renderMenu() {
+      const container = document.getElementById('menuContainer');
+      let html = '';
+      for (const [key, category] of Object.entries(MENU)) {
+        const isHavana = key === 'havana';
+        const isKickoff = key === 'kickoffFusion';
+        let sectionClass = 'category-section';
+        if (isHavana) sectionClass += ' havana-promo-section';
+        else if (isKickoff) sectionClass += ' kickoff-promo-section';
+        const titleClass = isHavana ? 'havana-title' : (isKickoff ? 'kickoff-title' : '');
+        const havanaHeader = isHavana ? `
+            <div class="havana-promo-header">
+              <img src="havana-fest-logo.png" alt="Havana Fest" class="havana-promo-banner" loading="lazy">
+              <p class="havana-promo-subtitle">Tropical vibes, festival flavours — order these favorites for the event!</p>
+            </div>` : '';
+        const menuContent = category.sections
+          ? category.sections.map(function (sec, idx) {
+              return `
+            <div class="havana-subsection" aria-labelledby="section-${key}-sub-${idx}">
+              <h3 class="havana-subsection-title" id="section-${key}-sub-${idx}">${sec.title}</h3>
+              <div class="menu-grid">
+                ${sec.items.map(function (item) { return renderMenuCardHtml(item, key); }).join('')}
+              </div>
+            </div>`;
+            }).join('')
+          : `<div class="menu-grid">
+              ${getCategoryItems(category).map(function (item) { return renderMenuCardHtml(item, key); }).join('')}
+            </div>`;
+        html += `
+          <section class="${sectionClass}" data-category="${key}" aria-labelledby="section-${key}" id="${key}">
+            ${havanaHeader}
+            <h2 class="category-title ${titleClass}" id="section-${key}">${category.title}</h2>
+            ${menuContent}
           </section>
         `;
       }
@@ -2063,10 +2236,20 @@
       applyFilters();
     }
 
+    // ========== CATEGORY VISIBILITY (Havana Fest is excluded from All) ==========
+    function isSectionVisibleForCategory(sectionCategory) {
+      if (selectedCategory === 'havana') return sectionCategory === 'havana';
+      if (selectedCategory === 'all') return sectionCategory !== 'havana';
+      return sectionCategory === selectedCategory;
+    }
+
     // ========== FLATTEN MENU FOR SEARCH ==========
     function getFlattenedMenuItems() {
-      return Object.values(MENU).reduce(function (acc, cat) {
-        return acc.concat(cat.items || []);
+      return Object.entries(MENU).reduce(function (acc, entry) {
+        var key = entry[0];
+        var cat = entry[1];
+        if (key === 'havana' && selectedCategory !== 'havana') return acc;
+        return acc.concat(getCategoryItems(cat));
       }, []);
     }
 
@@ -2086,7 +2269,7 @@
           card.classList.remove('hidden-by-search');
         });
         document.querySelectorAll('.category-section').forEach(function (section) {
-          const categoryMatch = selectedCategory === 'all' || section.getAttribute('data-category') === selectedCategory;
+          const categoryMatch = isSectionVisibleForCategory(section.getAttribute('data-category'));
           section.classList.toggle('hidden', !categoryMatch);
         });
         return;
@@ -2124,7 +2307,7 @@
             });
             document.querySelectorAll('.category-section').forEach(function (section) {
               const visibleCards = section.querySelectorAll('.menu-card:not(.hidden-by-search)').length;
-              const categoryMatch = selectedCategory === 'all' || section.getAttribute('data-category') === selectedCategory;
+              const categoryMatch = isSectionVisibleForCategory(section.getAttribute('data-category'));
               section.classList.toggle('hidden', !categoryMatch || visibleCards === 0);
             });
           });
@@ -2138,7 +2321,7 @@
         });
         document.querySelectorAll('.category-section').forEach(function (section) {
           const visibleCards = section.querySelectorAll('.menu-card:not(.hidden-by-search)').length;
-          const categoryMatch = selectedCategory === 'all' || section.getAttribute('data-category') === selectedCategory;
+          const categoryMatch = isSectionVisibleForCategory(section.getAttribute('data-category'));
           section.classList.toggle('hidden', !categoryMatch || visibleCards === 0);
         });
       } else {
@@ -2213,6 +2396,7 @@
     });
 
     function updateAmbientBackgrounds(cat) {
+      document.body.classList.toggle('havana-mode', cat === 'havana');
       var particles = document.getElementById('bg-particles');
       if (!particles) return;
       particles.classList.add('active');
@@ -2249,8 +2433,8 @@
     // ========== CART ==========
     function updateQuantity(itemId, delta, categoryKey) {
       let item = null;
-      if (categoryKey && MENU[categoryKey] && MENU[categoryKey].items) {
-        item = MENU[categoryKey].items.find(function(i) { return i.id === itemId; });
+      if (categoryKey && MENU[categoryKey]) {
+        item = getCategoryItems(MENU[categoryKey]).find(function(i) { return i.id === itemId; });
       }
       if (!item) item = getAllItems().find(function(i) { return i.id === itemId; });
       if (!item || !item.available) return;
