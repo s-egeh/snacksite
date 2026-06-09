@@ -11,7 +11,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-  <script src="https://js.paystack.co/v1/inline.js"></script>
+  <link rel="preconnect" href="https://js.paystack.co">
+  <link rel="preconnect" href="https://api.paystack.co">
+  <script src="https://js.paystack.co/v1/inline.js" defer></script>
 
   <style>
     :root {
@@ -2740,7 +2742,7 @@
         return;
       }
 
-      showLoading('Initiating payment...', 'Connecting to Paystack');
+      showLoading('Initiating payment...', 'Securely connecting to Paystack...');
 
       var channels = [];
       if (selectedPaymentMethod === 'mobile_money') channels = ['mobile_money'];
@@ -2748,42 +2750,51 @@
       else if (selectedPaymentMethod === 'bank') channels = ['bank'];
 
       var ref = 'EWE-' + Math.floor(Math.random() * 1000000000);
-      var handler = PaystackPop.setup({
-        key: CONFIG.paystackPublicKey,
-        email: email,
-        amount: Math.round(total * 100),
-        currency: 'GHS',
-        ref: ref,
-        channels: channels,
-        metadata: {
-          custom_fields: [
-            { display_name: 'Customer Name', variable_name: 'customer_name', value: name },
-            { display_name: 'Phone Number', variable_name: 'phone_number', value: phone },
-            { display_name: 'Items', variable_name: 'order_items', value: JSON.stringify(cart.map(function(i) { return { name: i.name, qty: i.quantity, price: i.price }; })) }
-          ]
-        },
-        callback: function(res) {
-          handlePaymentSuccess(res, {
-            name: name,
-            phone: phone,
-            email: email,
-            total: total,
-            deliveryType: deliveryType,
-            deliveryTime: deliveryTime,
-            location: location,
-            orderPayload: orderPayload,
-          });
-        },
-        onClose: function() {
+
+      setTimeout(function() {
+        var handler = PaystackPop.setup({
+          key: CONFIG.paystackPublicKey,
+          email: email,
+          amount: Math.round(total * 100),
+          currency: 'GHS',
+          ref: ref,
+          channels: channels,
+          metadata: {
+            custom_fields: [
+              { display_name: 'Customer Name', variable_name: 'customer_name', value: name },
+              { display_name: 'Phone Number', variable_name: 'phone_number', value: phone },
+              { display_name: 'Items', variable_name: 'order_items', value: JSON.stringify(cart.map(function(i) { return { name: i.name, qty: i.quantity, price: i.price }; })) }
+            ]
+          },
+          callback: function(res) {
+            hideLoading();
+            handlePaymentSuccess(res, {
+              name: name,
+              phone: phone,
+              email: email,
+              total: total,
+              deliveryType: deliveryType,
+              deliveryTime: deliveryTime,
+              location: location,
+              orderPayload: orderPayload,
+            });
+          },
+          onClose: function() {
+            hideLoading();
+          }
+        });
+
+        handler.openIframe();
+
+        setTimeout(function() {
           hideLoading();
-        }
-      });
-      hideLoading();
-      handler.openIframe();
+        }, 2500);
+
+      }, 50);
     }
 
     var lastPaidOrder = null;
-    var WHATSAPP_ORDER_NUMBER = '233509470647';
+    var WHATSAPP_ORDER_NUMBER = '233509929436';
 
     function shareOrderToWhatsApp() {
       if (!lastPaidOrder) return;
