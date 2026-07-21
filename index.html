@@ -10,7 +10,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
   <link rel="preconnect" href="https://js.paystack.co">
   <link rel="preconnect" href="https://api.paystack.co">
   <script src="https://js.paystack.co/v1/inline.js" defer></script>
@@ -469,6 +469,230 @@
 
     body.havana-mode .hero {
       display: none;
+    }
+
+    /* ========== KNUST SRC — STUDENTS' WEEK (night / neon) ========== */
+    .pill.srcweek-theme {
+      background: #041d10;
+      border: 2px solid #2BFF88;
+      color: #FFC20E;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      text-shadow: 0 0 8px rgba(43, 255, 136, 0.5);
+      box-shadow: 0 0 12px rgba(43, 255, 136, 0.25);
+    }
+    .pill.srcweek-theme:hover {
+      color: #fff;
+      background: #0B7A34;
+      border-color: #FFC20E;
+      box-shadow: 0 0 16px rgba(43, 255, 136, 0.55);
+    }
+    .pill.srcweek-theme.active {
+      background: linear-gradient(135deg, #0B7A34 0%, #063F1C 100%);
+      border-color: #FFC20E;
+      color: #FFC20E;
+      box-shadow: 0 0 20px rgba(43, 255, 136, 0.6), inset 0 0 12px rgba(43, 255, 136, 0.25);
+    }
+
+    .srcweek-promo-section {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse 90% 70% at 50% 0%, rgba(43, 255, 136, 0.16) 0%, transparent 62%),
+        radial-gradient(ellipse 70% 50% at 50% 100%, rgba(255, 194, 14, 0.10) 0%, transparent 60%),
+        linear-gradient(180deg, #041d10 0%, #020c06 100%);
+      border: 2px solid #2BFF88;
+      border-radius: 24px;
+      padding: 2rem 1.25rem 2.25rem;
+      margin: 2.5rem 0;
+      box-shadow: 0 0 48px rgba(43, 255, 136, 0.22), inset 0 0 40px rgba(43, 255, 136, 0.05);
+      animation: srcSectionBreathe 4.5s ease-in-out infinite;
+    }
+    @keyframes srcSectionBreathe {
+      0%, 100% { box-shadow: 0 0 42px rgba(43, 255, 136, 0.18), inset 0 0 40px rgba(43, 255, 136, 0.05); }
+      50%      { box-shadow: 0 0 70px rgba(43, 255, 136, 0.34), inset 0 0 48px rgba(43, 255, 136, 0.09); }
+    }
+    /* faint electric grid backdrop */
+    .srcweek-promo-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(90deg, transparent, transparent 38px, rgba(43, 255, 136, 0.05) 39px, transparent 40px),
+        repeating-linear-gradient(0deg, transparent, transparent 38px, rgba(43, 255, 136, 0.05) 39px, transparent 40px);
+      pointer-events: none;
+      opacity: 0.55;
+    }
+    .srcweek-promo-section > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .srcweek-promo-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+    }
+    .srcweek-promo-banner {
+      max-width: 360px;
+      width: 100%;
+      height: auto;
+      border-radius: 18px;
+      border: 3px solid #FFC20E;
+      box-shadow: 0 0 34px rgba(43, 255, 136, 0.5), 0 8px 28px rgba(0, 0, 0, 0.55);
+      animation: srcBannerFloat 5s ease-in-out infinite;
+    }
+    @keyframes srcBannerFloat {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-9px); }
+    }
+
+    .srcweek-heading {
+      font-family: 'Bebas Neue', 'Inter', sans-serif;
+      font-size: clamp(2.6rem, 9vw, 4.5rem);
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      line-height: 0.95;
+      color: #EAFFEF;
+      text-shadow:
+        0 0 6px #2BFF88,
+        0 0 16px #2BFF88,
+        0 0 30px rgba(43, 255, 136, 0.75),
+        0 0 2px #fff;
+      animation: srcNeonPulse 2.4s ease-in-out infinite;
+    }
+    .srcweek-heading .src-gold {
+      color: #FFC20E;
+      text-shadow: 0 0 8px rgba(255, 194, 14, 0.9), 0 0 22px rgba(255, 194, 14, 0.6);
+    }
+    @keyframes srcNeonPulse {
+      0%, 100% { text-shadow: 0 0 6px #2BFF88, 0 0 16px #2BFF88, 0 0 30px rgba(43, 255, 136, 0.7), 0 0 2px #fff; }
+      50%      { text-shadow: 0 0 10px #2BFF88, 0 0 26px #2BFF88, 0 0 52px rgba(43, 255, 136, 0.95), 0 0 4px #fff; }
+    }
+
+    /* Glowing call-to-action */
+    .srcweek-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.65rem 1.5rem;
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(11, 122, 52, 0.35), rgba(2, 12, 6, 0.55));
+      border: 2px solid #2BFF88;
+      box-shadow: 0 0 22px rgba(43, 255, 136, 0.5), inset 0 0 16px rgba(43, 255, 136, 0.15);
+      animation: srcCtaGlow 1.8s ease-in-out infinite;
+    }
+    .srcweek-cta-text {
+      font-family: 'Bebas Neue', 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: clamp(1.15rem, 4.2vw, 1.9rem);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, #2BFF88, #EAFFEF, #FFC20E, #2BFF88);
+      background-size: 300% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      filter: drop-shadow(0 0 8px rgba(43, 255, 136, 0.55));
+      animation: srcTextSweep 3s linear infinite;
+    }
+    @keyframes srcCtaGlow {
+      0%, 100% { box-shadow: 0 0 18px rgba(43, 255, 136, 0.4), inset 0 0 14px rgba(43, 255, 136, 0.12); border-color: #2BFF88; }
+      50%      { box-shadow: 0 0 34px rgba(43, 255, 136, 0.75), 0 0 60px rgba(43, 255, 136, 0.35), inset 0 0 20px rgba(43, 255, 136, 0.2); border-color: #7CFFB0; }
+    }
+    @keyframes srcTextSweep { to { background-position: 300% center; } }
+
+    /* Stand / location badge */
+    .srcweek-stand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.5rem 1.35rem;
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(255, 194, 14, 0.16), rgba(2, 12, 6, 0.5));
+      border: 2px solid #FFC20E;
+      box-shadow: 0 0 22px rgba(255, 194, 14, 0.4), inset 0 0 14px rgba(255, 194, 14, 0.12);
+      font-family: 'Bebas Neue', 'Inter', sans-serif;
+    }
+    .srcweek-stand-pin {
+      font-size: 1.25em;
+      line-height: 1;
+      filter: drop-shadow(0 0 6px rgba(255, 194, 14, 0.85));
+    }
+    .srcweek-stand-label {
+      color: #EAFFEF;
+      font-size: 1.2rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-shadow: 0 0 8px rgba(43, 255, 136, 0.6);
+    }
+    .srcweek-stand-num {
+      color: #FFC20E;
+      font-size: 1.6rem;
+      letter-spacing: 0.08em;
+      text-shadow: 0 0 10px rgba(255, 194, 14, 0.85), 0 0 22px rgba(255, 194, 14, 0.5);
+    }
+
+    .srcweek-promo-subtitle {
+      color: #BFF7D2;
+      font-size: 0.95rem;
+      font-weight: 500;
+      max-width: 30rem;
+      line-height: 1.5;
+    }
+
+    .srcweek-promo-section .category-title.srcweek-title {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .srcweek-subsection { margin-bottom: 2.25rem; }
+    .srcweek-subsection:last-child { margin-bottom: 0; }
+    .srcweek-subsection-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #FFC20E;
+      text-shadow: 0 0 10px rgba(255, 194, 14, 0.55), 0 1px 0 #063F1C;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid rgba(43, 255, 136, 0.45);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .srcweek-promo-section .menu-card {
+      border-color: rgba(43, 255, 136, 0.28);
+      background: rgba(11, 122, 52, 0.10);
+    }
+    .srcweek-promo-section .menu-card:hover {
+      border-color: #2BFF88;
+      box-shadow: 0 10px 36px rgba(43, 255, 136, 0.25), 0 0 0 1px rgba(255, 194, 14, 0.25);
+    }
+    .srcweek-promo-section .card-price { color: #FFC20E; }
+
+    body.srcweek-mode #bg-kente {
+      background-color: #02100a;
+      background-image:
+        radial-gradient(ellipse 100% 80% at 50% 15%, rgba(43, 255, 136, 0.12) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 50% at 80% 70%, rgba(255, 194, 14, 0.08) 0%, transparent 50%),
+        repeating-linear-gradient(0deg, transparent, transparent 2px, #04160c 2px, #04160c 3px);
+    }
+    body.srcweek-mode .hero { display: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .srcweek-heading, .srcweek-cta, .srcweek-cta-text, .srcweek-promo-section, .srcweek-promo-banner { animation: none; }
     }
 
     /* ========== HERO ========== */
@@ -1772,7 +1996,7 @@
       <button type="button" class="pill" data-category="abele" role="tab">Abele Walls</button>
       <button type="button" class="pill" data-category="gravy" role="tab">Gravy Deals</button>
       <button type="button" class="pill" data-category="lunch" role="tab">Lunch Packages</button>
-      <button type="button" class="pill havana-theme" data-category="havana" role="tab" aria-label="Havana Fest event menu">Havana Fest</button>
+      <button type="button" class="pill srcweek-theme" data-category="srcweek" role="tab" aria-label="KNUST SRC Students' Week menu">KNUST SRC</button>
     </div>
   </div>
 
@@ -2028,29 +2252,35 @@
     ];
 
     const MENU = {
-      havana: {
-        title: 'Havana Fest',
+      srcweek: {
+        title: 'KNUST SRC',
         icon: '',
         sections: [
           {
-            title: 'Snacks & Bites',
+            title: 'Shots',
             items: [
-              { id: 9, name: 'Spring Rolls', price: 25, desc: 'Crispy spring rolls', image: 'https://images.unsplash.com/photo-1762631884776-e1a2e5cd6d8d?auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&w=600&q=80', available: true },
-              { id: 10, name: 'Samosa', price: 25, desc: 'Spiced samosas', image: 'https://images.unsplash.com/photo-1747008624832-e068ee496908?auto=format&fit=crop&w=600&q=80', available: true },
-              { id: 24, name: 'Peppered Gizzard', price: 15, desc: '2 for GHS 15 – Spicy peppered gizzard', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAZgKngiSHJlRm6dzfrFfU9cNv2uGh1F4INA&s', available: true },
+              { id: 60, name: 'Vodka', price: 25, desc: 'Vodka shot', image: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=600&q=80', available: true },
+              { id: 61, name: 'Tequila', price: 40, desc: 'Tequila shot', image: 'https://images.unsplash.com/photo-1609951651556-5334e2706168?auto=format&fit=crop&w=600&q=80', available: true },
+              { id: 62, name: 'Carnival', price: 20, desc: 'Carnival shot', image: 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80', available: true },
             ]
           },
           {
-            title: 'Loaded Fries',
+            title: 'Samosa & Spring Roll',
             items: [
-              { id: 29, name: 'Regular Loaded Fries', price: 90, desc: 'Crispy fries loaded with your choice of toppings', image: 'loaded_fries_et-removebg-preview.png', available: true },
-              { id: 30, name: 'Large Loaded Fries', price: 120, desc: 'Generous portion of loaded fries', image: 'loaded_fries_et-removebg-preview.png', available: true },
+              { id: 63, name: 'Samosa', price: 25, desc: '3 pieces', image: 'https://images.unsplash.com/photo-1747008624832-e068ee496908?auto=format&fit=crop&w=600&q=80', available: true },
+              { id: 64, name: 'Spring Roll', price: 25, desc: '4 pieces', image: 'https://images.unsplash.com/photo-1762631884776-e1a2e5cd6d8d?auto=format&fit=crop&w=600&q=80', available: true },
+              { id: 65, name: 'Samosa + Spring Roll', price: 35, desc: 'Combo — samosa & spring roll', image: 'https://images.unsplash.com/photo-1762631884776-e1a2e5cd6d8d?auto=format&fit=crop&w=600&q=80', available: true },
             ]
           },
           {
-            title: 'Cool Sips',
+            title: 'Food Menu',
             items: [
-              { id: 17, name: 'Sobolo', price: 20, desc: 'Traditional hibiscus drink', image: 'sobolo_top_v-removebg-preview.png', available: true },
+              { id: 66, name: 'Loaded Fries', price: 90, desc: 'Crispy fries loaded with toppings', image: 'loaded_fries_et-removebg-preview.png', available: true },
+              { id: 67, name: 'Chicken Drumsticks', price: 20, desc: 'Crispy chicken drumsticks', image: 'https://images.unsplash.com/photo-1764756995069-4a0b5f31d792?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', available: true },
+              { id: 68, name: 'Chicken Wings', price: 50, desc: '4 pieces', image: 'https://d21klxpge3tttg.cloudfront.net/wp-content/uploads/2020/01/featured-honey-soy-chicken-wings-1024x640.jpg', available: true },
+              { id: 69, name: 'Kelewele', price: 20, desc: 'Spicy fried plantain', image: 'https://joyfulcook.com/wp-content/uploads/2025/02/EDDA2A43-6423-4366-B256-6B00E9533B47.jpeg', available: true },
+              { id: 70, name: 'Sobolo', price: 25, desc: 'Chilled hibiscus drink', image: 'sobolo_top_v-removebg-preview.png', available: true },
+              { id: 71, name: 'Egg & Pepper', price: 7, desc: 'Egg & pepper', image: 'https://images.unsplash.com/photo-1482049016688-2d3e1b311543?auto=format&fit=crop&w=600&q=80', available: true },
             ]
           },
         ]
@@ -2175,7 +2405,7 @@
                   <div class="card-image-wrap">
                     <div class="card-image-blob" aria-hidden="true"></div>
                     ${!item.available ? '<span class="sold-out-badge">Sold Out</span>' : ''}
-                    <img src="${item.image}" alt="${item.name}">
+                    <img src="${item.image}" alt="${item.name}" loading="lazy" onerror="this.onerror=null;this.src='${key === 'srcweek' ? 'srcflyer.png' : 'logo.jpeg'}';">
                   </div>
                   <div class="card-body">
                     <h3 class="card-name">${item.name}</h3>
@@ -2203,21 +2433,39 @@
       let html = '';
       for (const [key, category] of Object.entries(MENU)) {
         const isHavana = key === 'havana';
+        const isSrc = key === 'srcweek';
         const isKickoff = key === 'kickoffFusion';
         let sectionClass = 'category-section';
         if (isHavana) sectionClass += ' havana-promo-section';
+        else if (isSrc) sectionClass += ' srcweek-promo-section';
         else if (isKickoff) sectionClass += ' kickoff-promo-section';
-        const titleClass = isHavana ? 'havana-title' : (isKickoff ? 'kickoff-title' : '');
+        const titleClass = isHavana ? 'havana-title' : (isSrc ? 'srcweek-title' : (isKickoff ? 'kickoff-title' : ''));
         const havanaHeader = isHavana ? `
             <div class="havana-promo-header">
               <img src="havana-fest-logo.png" alt="Havana Fest" class="havana-promo-banner" loading="lazy">
               <p class="havana-promo-subtitle">Tropical vibes, festival flavours — order these favorites for the event!</p>
             </div>` : '';
+        const srcHeader = isSrc ? `
+            <div class="srcweek-promo-header">
+              <img src="srcflyer.png" alt="KNUST SRC — Students' Week Celebration 2026" class="srcweek-promo-banner" loading="lazy">
+              <div class="srcweek-heading" aria-hidden="true">KNUST <span class="src-gold">SRC</span></div>
+              <div class="srcweek-cta">
+                <span class="srcweek-cta-text">Come Buy From Us</span>
+              </div>
+              <div class="srcweek-stand" aria-label="Find us at stand 191 / 192">
+                <span class="srcweek-stand-pin" aria-hidden="true">📍</span>
+                <span class="srcweek-stand-label">Stand</span>
+                <span class="srcweek-stand-num">191&nbsp;/&nbsp;192</span>
+              </div>
+              <p class="srcweek-promo-subtitle">Students' Week Celebration 2026 — Cool Sips &amp; Hot Snacks, all night long!</p>
+            </div>` : '';
+        const promoHeader = havanaHeader + srcHeader;
+        const subPrefix = isSrc ? 'srcweek' : 'havana';
         const menuContent = category.sections
           ? category.sections.map(function (sec, idx) {
               return `
-            <div class="havana-subsection" aria-labelledby="section-${key}-sub-${idx}">
-              <h3 class="havana-subsection-title" id="section-${key}-sub-${idx}">${sec.title}</h3>
+            <div class="${subPrefix}-subsection" aria-labelledby="section-${key}-sub-${idx}">
+              <h3 class="${subPrefix}-subsection-title" id="section-${key}-sub-${idx}">${sec.title}</h3>
               <div class="menu-grid">
                 ${sec.items.map(function (item) { return renderMenuCardHtml(item, key); }).join('')}
               </div>
@@ -2228,7 +2476,7 @@
             </div>`;
         html += `
           <section class="${sectionClass}" data-category="${key}" aria-labelledby="section-${key}" id="${key}">
-            ${havanaHeader}
+            ${promoHeader}
             <h2 class="category-title ${titleClass}" id="section-${key}">${category.title}</h2>
             ${menuContent}
           </section>
@@ -2239,9 +2487,10 @@
     }
 
     // ========== CATEGORY VISIBILITY (Havana Fest is excluded from All) ==========
+    var EVENT_CATEGORIES = ['srcweek'];
     function isSectionVisibleForCategory(sectionCategory) {
-      if (selectedCategory === 'havana') return sectionCategory === 'havana';
-      if (selectedCategory === 'all') return sectionCategory !== 'havana';
+      if (EVENT_CATEGORIES.indexOf(selectedCategory) !== -1) return sectionCategory === selectedCategory;
+      if (selectedCategory === 'all') return EVENT_CATEGORIES.indexOf(sectionCategory) === -1;
       return sectionCategory === selectedCategory;
     }
 
@@ -2250,7 +2499,7 @@
       return Object.entries(MENU).reduce(function (acc, entry) {
         var key = entry[0];
         var cat = entry[1];
-        if (key === 'havana' && selectedCategory !== 'havana') return acc;
+        if (EVENT_CATEGORIES.indexOf(key) !== -1 && selectedCategory !== key) return acc;
         return acc.concat(getCategoryItems(cat));
       }, []);
     }
@@ -2399,6 +2648,7 @@
 
     function updateAmbientBackgrounds(cat) {
       document.body.classList.toggle('havana-mode', cat === 'havana');
+      document.body.classList.toggle('srcweek-mode', cat === 'srcweek');
       var particles = document.getElementById('bg-particles');
       if (!particles) return;
       particles.classList.add('active');
